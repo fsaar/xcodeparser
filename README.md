@@ -5,7 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/fsaar/filesize/badges/gpa.svg)](https://codeclimate.com/github/fsaar/filesize)
 [![codebeat badge](https://codebeat.co/badges/4ab21651-9ae0-423b-a49f-412427a2d2d5)](https://codebeat.co/projects/github-com-fsaar-filesize-master)
 
-# filesize
+# XcodeParser
 
 ### Tool to list files that have more than \<limit> number of lines
 ### Use it to find technical debt. Often in projects maintained about several years files and classes tend to grow. To find those files in Objective-C that have more than a 1000 lines use

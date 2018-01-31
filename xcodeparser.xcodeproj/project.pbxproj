@@ -62,6 +62,7 @@
 		56547EE1201F646200F52AF3 /* ExpressionStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionStack.swift; sourceTree = "<group>"; };
 		56547EE3201F724600F52AF3 /* ExpressionStackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionStackTests.swift; sourceTree = "<group>"; };
 		56547EE5201F7A3400F52AF3 /* ExpressionExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionExtractorTests.swift; sourceTree = "<group>"; };
+		56547EE7202204F400F52AF3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		OBJ_11 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		OBJ_13 /* XcodeConfigurationParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeConfigurationParserTests.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -130,6 +131,7 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				56547EE7202204F400F52AF3 /* README.md */,
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_12 /* Tests */,

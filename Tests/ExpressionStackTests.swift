@@ -6,7 +6,7 @@ class ExpressionStackTests : XCTestCase {
     var tupleSet : Set<ExpressionStackPair>!
 
     override func setUp() {
-         tupleSet = Set([ExpressionStackPair(yin: "{", yang: "}"),ExpressionStackPair(yin: "(", yang: ")")])
+         tupleSet = Set([ExpressionStackPair(open: "{", close: "}"),ExpressionStackPair(open: "(", close: ")")])
     }
     
     func testThatItCanBeInitialised() {

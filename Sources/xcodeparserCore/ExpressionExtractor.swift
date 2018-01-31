@@ -21,7 +21,7 @@ public class ExpressionExtractor {
     }
     private var state = State.searching
     public let content : String
-    private let tupleSet = Set([ExpressionStackPair(yin: "{", yang: "}"),ExpressionStackPair(yin: "(", yang: ")")])
+    private let tupleSet = Set([ExpressionStackPair(open: "{", close: "}"),ExpressionStackPair(open: "(", close: ")")])
     private lazy var stack = ExpressionStack(pairs: self.tupleSet)
 
     public  init(with content : String) {

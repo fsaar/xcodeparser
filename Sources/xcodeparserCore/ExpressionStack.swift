@@ -9,7 +9,7 @@ import Foundation
 
 public extension Sequence where Element == ExpressionStackPair {
     public  func list() -> [String] {
-        return self.reduce([]) { $0 + [$1.yin,$1.yang] }
+        return self.reduce([]) { $0 + [$1.open,$1.close] }
     }
     
     public  func contains(_ string : String) -> Bool {
@@ -18,18 +18,18 @@ public extension Sequence where Element == ExpressionStackPair {
 }
 
 public struct ExpressionStackPair : Hashable {
-    let yin : String
-    let yang: String
+    let open : String
+    let close: String
     
-    public init(yin : String,yang:String) {
-        (self.yin,self.yang) = (yin,yang)
+    public init(open : String,close:String) {
+        (self.open,self.close) = (open,close)
     }
     
     public static func ==(lhs : ExpressionStackPair,rhs : ExpressionStackPair) -> Bool {
-        return lhs.yin == rhs.yin && lhs.yang == rhs.yang
+        return lhs.open == rhs.open && lhs.close == rhs.close
     }
     public var hashValue: Int {
-        return "\(yin)|\(yang)".hashValue
+        return "\(open)|\(close)".hashValue
     }
 }
 
@@ -55,9 +55,9 @@ fileprivate extension ExpressionStack {
         guard stack.count > 1 else {
             return stack
         }
-        let yin = stack[stack.count-2]
-        let yang = stack[stack.count-1]
-        let pair = ExpressionStackPair(yin: yin, yang: yang)
+        let open = stack[stack.count-2]
+        let close = stack[stack.count-1]
+        let pair = ExpressionStackPair(open: open, close: close)
         if pairs.contains(pair) {
             return Array(stack.dropLast().dropLast())
         }
