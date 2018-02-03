@@ -7,75 +7,51 @@
 
 import Foundation
 
-enum Regex : String {
-    case dictionary = "\\{.*\\}"
-    case keyValue = "\\s*(\"\\w*\")\\s*=\\s*(\"\\w*\")\\s*;\\s*"
-}
 
-struct XcodeConfigurationExpressionParser : Sequence {
-    var currentIndex : String.Index
-    let configuration  : String
-    public init?(with xcodeProject: String) {
-        configuration = xcodeProject
-        currentIndex = configuration.startIndex
-    }
-    
-    public func makeIterator() -> AnyIterator<String> {
-        return AnyIterator<String> {
-            guard self.currentIndex < self.configuration.endIndex else {
-                return nil
-            }
-            
-            return ""
-        }
-    }
+public struct XcodeSimpleExpression {
+    public let value : String
+    public let comment : String?
 }
 
 
 public class XcodeConfigurationParser {
+    
     public enum Result : Error {
         case invalid
     }
     
     let configuration : String
     public init(configuration : String) throws {
-        let content = configuration.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !content.isEmpty else {
+        guard let parsedConfiguration = try? ExpressionExtractor(with: configuration).parse()?.expression ?? "",!parsedConfiguration.isEmpty else {
             throw Result.invalid
         }
-        self.configuration = configuration.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let tuple = applyExpression(Regex.dictionary.rawValue, to: content),let _ = tuple.object as? [String:Any] else {
-            throw Result.invalid
-        }
+        self.configuration = String(parsedConfiguration.dropFirst().dropLast())
     }
     
-    public func parse() throws  -> [String : Any] {
-        
-        var objects : [String: Any] = [:]
-     //   content.split(separator: "\n").forEach { line in
-//            if let object = applyExpression(Regex.keyValue.rawValue, to: String(line))?.object as [String:] {
-//                objects += [object]
-//            }
-      //  }
+    public func parse(using dict : [String:Any] = [:]) throws  -> [String : Any] {
+        var resultsDict = dict
+        var currentIndex = configuration.startIndex
+        while currentIndex < configuration.endIndex {
+            let remainder = String(configuration[currentIndex..<configuration.endIndex])
+            if let (key,comment,keyRange) = remainder.keyValueStart() {
+                let distance = remainder.distance(from: keyRange.lowerBound, to: keyRange.upperBound)
+                currentIndex = configuration.index(currentIndex, offsetBy: distance)
+                let remainderAfterKey = String(configuration[currentIndex..<configuration.endIndex])
+                if let (value,valueRange) = remainderAfterKey.value() {
+                    let distance = remainderAfterKey.distance(from: valueRange.lowerBound, to: valueRange.upperBound)
+                    currentIndex = configuration.index(currentIndex, offsetBy: distance)
+                    let e = XcodeSimpleExpression(value: value, comment: comment)
+                    resultsDict[key] = e
+                }
+            }
+            else
+            {
+                currentIndex = configuration.index(after: currentIndex)
+            }
+        }
     
-        return objects
+        return resultsDict
     }
 }
 //
-extension XcodeConfigurationParser {
-    func applyExpression(_ expression : String,to string: String) -> (object:Any,content:String)? {
-        guard let dictRegex = try? NSRegularExpression(pattern: expression, options: [.dotMatchesLineSeparators]) else {
-            return nil
-        }
-        let matches = dictRegex.matches(in: string, options: [], range: NSMakeRange(0, string.count))
-        guard let result = matches.first else {
-            return nil
-        }
-        let range = result.range
-        let startIndex = string.index(string.startIndex, offsetBy: range.location)
-        let endIndex = string.index(startIndex,offsetBy: range.length)
-        let object : [String: Any] = [:]
-        let content = "\(string[string.index(after: startIndex)..<string.index(before: endIndex)])"
-        return (object as Any,content)
-    }
-}
+
