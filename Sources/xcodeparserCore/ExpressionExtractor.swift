@@ -7,7 +7,7 @@
 
 import Foundation
 
-public typealias ExpressionExtractorResult = (expression:String,remainder:String)
+public typealias ExpressionExtractorResult = (expression:String,range:Range<String.Index>)
 
 
 public class ExpressionExtractor {
@@ -38,10 +38,10 @@ public class ExpressionExtractor {
             switch (state,stack.isEmpty) {
             case (.started(let startIndex),true):
                 self.state = .end
-                let expression = String(self.content[startIndex...currentIndex])
-                let index = content.index(after: currentIndex)
-                let remainder = String(self.content[index..<content.endIndex])
-                return (expression,remainder)
+                let endIndex = self.content.index(after:currentIndex)
+                let range = startIndex..<endIndex
+                let expression = String(self.content[range])
+                return (expression,range)
             case (.searching,false):
                 self.state = .started(currentIndex)
             default:

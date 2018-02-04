@@ -10,45 +10,51 @@ class ExpressionExtractorTests : XCTestCase {
     }
     
     func testThatItCanParse() {
-        let parser = ExpressionExtractor(with: "{.}")
+        let content = "{.}"
+        let parser = ExpressionExtractor(with: content)
         let result = try! parser.parse()
         XCTAssertEqual(result!.expression, "{.}")
-        XCTAssertEqual(result!.remainder, "")
+        XCTAssertEqual(result!.range, content.startIndex..<content.endIndex)
     }
     
     func testThatItCanParseWithExpressionAtTheEnd() {
-        let parser = ExpressionExtractor(with: "abc{.}")
+        let content = "abc{.}"
+        let parser = ExpressionExtractor(with: content)
         let result = try! parser.parse()
         XCTAssertEqual(result!.expression, "{.}")
-        XCTAssertEqual(result!.remainder, "")
+        XCTAssertEqual(result!.range, content.index(content.startIndex,offsetBy:3)..<content.endIndex)
     }
     
     func testThatItCanParseWithExpressionAtTheBeginning() {
-        let parser = ExpressionExtractor(with: "{....}abc")
+        let content = "{....}abc"
+        let parser = ExpressionExtractor(with: content)
         let result = try! parser.parse()
         XCTAssertEqual(result!.expression, "{....}")
-        XCTAssertEqual(result!.remainder, "abc")
+        XCTAssertEqual(result!.range, content.startIndex..<content.index(content.endIndex,offsetBy:-3))
     }
     
     func testThatItCanParseComplexExpression() {
-        let parser = ExpressionExtractor(with: "{.....(abc)()()(){}{}{}}")
+        let content = "{.....(abc)()()(){}{}{}}"
+        let parser = ExpressionExtractor(with: content)
         let result = try! parser.parse()
         XCTAssertEqual(result!.expression, "{.....(abc)()()(){}{}{}}")
-        XCTAssertEqual(result!.remainder, "")
+        XCTAssertEqual(result!.range, content.startIndex..<content.endIndex)
     }
     
     func testThatItCanParseComplexExpressionAtTheEnd() {
-        let parser = ExpressionExtractor(with: "abc{.....(abc)()()(){}{}{}}")
+        let content = "abc{.....(abc)()()(){}{}{}}"
+        let parser = ExpressionExtractor(with: content)
         let result = try! parser.parse()
         XCTAssertEqual(result!.expression, "{.....(abc)()()(){}{}{}}")
-        XCTAssertEqual(result!.remainder, "")
+        XCTAssertEqual(result!.range, content.index(content.startIndex,offsetBy:3)..<content.endIndex)
     }
     
     func testThatItCanParseComplexExpressionAtTheBeginning() {
-        let parser = ExpressionExtractor(with: "{.....(abc)()()(){}{}{}}abc{{{{}}}}")
+        let content = "{.....(abc)()()(){}{}{}}abc{{{{}}}}"
+        let parser = ExpressionExtractor(with: content)
         let result = try! parser.parse()
         XCTAssertEqual(result!.expression, "{.....(abc)()()(){}{}{}}")
-        XCTAssertEqual(result!.remainder, "abc{{{{}}}}")
+        XCTAssertEqual(result!.range, content.startIndex..<content.index(content.endIndex,offsetBy:-11))
     }
     
     func testThatItShouldThrowIfSyntaxInvalid() {

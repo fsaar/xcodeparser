@@ -34,14 +34,26 @@ public class XcodeConfigurationParser {
         while currentIndex < configuration.endIndex {
             let remainder = String(configuration[currentIndex..<configuration.endIndex])
             if let (key,comment,keyRange) = remainder.keyValueStart() {
-                let distance = remainder.distance(from: keyRange.lowerBound, to: keyRange.upperBound)
-                currentIndex = configuration.index(currentIndex, offsetBy: distance)
+                currentIndex = configuration.index(index: currentIndex,after: keyRange)
                 let remainderAfterKey = String(configuration[currentIndex..<configuration.endIndex])
                 if let (value,valueRange) = remainderAfterKey.value() {
-                    let distance = remainderAfterKey.distance(from: valueRange.lowerBound, to: valueRange.upperBound)
-                    currentIndex = configuration.index(currentIndex, offsetBy: distance)
+                    currentIndex = configuration.index(index: currentIndex,after: valueRange)
                     let e = XcodeSimpleExpression(value: value, comment: comment)
                     resultsDict[key] = e
+                }
+                else {
+                    switch (configuration[currentIndex]) {
+                    case "{":
+                        if let config = try? ExpressionExtractor(with: configuration).parse() {
+                            
+                        }
+                        break
+                    case "(":
+                        break
+                    default:
+                        break
+                    }
+                    currentIndex = configuration.index(after: currentIndex)
                 }
             }
             else
