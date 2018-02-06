@@ -1,13 +1,10 @@
 //
 //  XcodeExpressionExtractor.swift
-//  xcodeparserPackageDescription
 //
 //  Created by Frank Saar on 29/01/2018.
 //
 
 import Foundation
-
-public typealias ExpressionExtractorResult = (expression:String,range:Range<String.Index>)
 
 
 public class ExpressionExtractor {
@@ -28,7 +25,7 @@ public class ExpressionExtractor {
         self.content = content
     }
     
-    public func parse() throws -> ExpressionExtractorResult? {
+    public func parse() throws -> (expression:String,range:Range<String.Index>)? {
         var currentIndex = content.startIndex
         while currentIndex < content.endIndex {
             let character = String(content[currentIndex])

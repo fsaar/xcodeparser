@@ -1,6 +1,5 @@
 //
-//  XcodeExpressionExtractor.swift
-//  xcodeparserPackageDescription
+//  ExpressionStack.swift
 //
 //  Created by Frank Saar on 29/01/2018.
 //

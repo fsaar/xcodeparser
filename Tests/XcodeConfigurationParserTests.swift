@@ -40,6 +40,21 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertEqual(key,"key")
     }
     
+    func testThatItShouldReadAKeyValueConfigurationWithInitialCommentsAtTheTop() {
+        let configString =  """
+                                // !$*UTF8*$!
+                                {
+                                    key = value;
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse() as! [String:XcodeSimpleExpression]
+        let key = config.keys.first!
+        let value = config.values.first!.value
+        XCTAssertEqual(value,"value")
+        XCTAssertEqual(key,"key")
+    }
+    
     func testThatItShouldReadAKeyValueConfigurationWithMultipleEntries() {
         let configString =  """
                                 {
@@ -73,25 +88,81 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertEqual(value,"value1")
         XCTAssertEqual(value2,"value2")
         XCTAssertEqual(value3,"value3")
-        XCTAssertEqual(expression.value,"value4")
-        XCTAssertEqual(expression.comment!,"/* comment 4 */")
+        XCTAssertEqual(expression,XcodeSimpleExpression(value:"value4",comment:"comment 4 "))
     }
     
     func testThatItShouldReadAListConfiguration() {
-        
+        let configString =  """
+                                {
+                                    OBJ_10 = value1;
+                                    OBJ_11 = (
+                                      value2,
+                                        value3,
+                                    );
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse()
+        let value = (config["OBJ_10"] as! XcodeSimpleExpression).value
+        let valueList = config["OBJ_11"] as! [XcodeSimpleExpression]
+        XCTAssertEqual(value,"value1")
+        XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"value2"),XcodeSimpleExpression(value:"value3")])
+    }
+    func testThatItShouldReadAListConfigurationWithComments() {
+        let configString =  """
+                                {
+                                    key1 = value1;
+                                    children = (
+                                "xcodeparser::xcodeparserTests::Product" /* xcodeparserTests.xctest */,
+                                "xcodeparser::xcodeparser::Product" /* xcodeparser */,
+                                "xcodeparser::xcodeparserCore::Product" /* xcodeparserCore.framework */,
+                                    );
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse()
+        let value = (config["key1"] as! XcodeSimpleExpression).value
+        let valueList = config["children"] as! [XcodeSimpleExpression]
+        XCTAssertEqual(value,"value1")
+        XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserTests::Product\"",comment:"xcodeparserTests.xctest "),
+                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparser::Product\"",comment:"xcodeparser "),
+                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserCore::Product\"",comment:"xcodeparserCore.framework ")])
     }
     
-    func testThatItShouldReadADictionaryConfigurationWithSimpleKeyValues() {
-        
+    func testThatItShouldReadADictionaryConfiguration() {
+        let configString =  """
+                                {
+                                    OBJ_40 /* Frameworks */ = {
+                                                                isa = PBXFrameworksBuildPhase;
+                                                                buildActionMask = 0;
+                                                                runOnlyForDeploymentPostprocessing = 0;
+                                                                };
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse()
+//        let value = (config["OBJ_40"] as! XcodeSimpleExpression).value
+//        let valueList = config["key2"] as! [XcodeSimpleExpression]
+//        XCTAssertEqual(value,"value1")
+//        XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"value2"),XcodeSimpleExpression(value:"value3")])
     }
     
-    func testThatItShouldReadADictionaryConfigurationWithAList() {
-        
-    }
     
-    func testThatItShouldReadADictionaryConfigurationWithAnotherDictionary() {
-        
-    }
+//    func testThatItShouldReadAListConfiguration() {
+//
+//    }
+//
+//    func testThatItShouldReadADictionaryConfigurationWithSimpleKeyValues() {
+//
+//    }
+//
+//    func testThatItShouldReadADictionaryConfigurationWithAList() {
+//
+//    }
+//
+//    func testThatItShouldReadADictionaryConfigurationWithAnotherDictionary() {
+//
+//    }
 
     
 //    func testThatItShouldShowHelpIfHelpOptionGiven() {
