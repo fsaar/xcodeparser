@@ -133,21 +133,21 @@ class XcodeConfigurationParserTests : XCTestCase {
         let configString =  """
                                 {
                                     OBJ_40 /* Frameworks */ = {
-                                                                isa = PBXFrameworksBuildPhase;
+                                isa = PBXFrameworksBuildPhase;
                                                                 buildActionMask = 0;
                                                                 runOnlyForDeploymentPostprocessing = 1;
                                                                 };
                                 }
                             """
         let parser = try! XcodeConfigurationParser(configuration:configString)
-    //    let config = try! parser.parse()
-//        let dict = config["OBJ_40"] as! [String:XcodeSimpleExpression]
-//        let value1 = dict["isa"]!.value
-//        let value2 = dict["buildActionMask"]!.value
-//        let value3 = dict["runOnlyForDeploymentPostprocessing"]!.value
-//        XCTAssertEqual(value1,"PBXFrameworksBuildPhase")
-//        XCTAssertEqual(value2,"0")
-//        XCTAssertEqual(value3,"1")
+        let config = try! parser.parse()
+        let dict = config["OBJ_40"] as! [String:XcodeSimpleExpression]
+        let value1 = dict["isa"]!.value
+        let value2 = dict["buildActionMask"]!.value
+        let value3 = dict["runOnlyForDeploymentPostprocessing"]!.value
+        XCTAssertEqual(value1,"PBXFrameworksBuildPhase")
+        XCTAssertEqual(value2,"0")
+        XCTAssertEqual(value3,"1")
     }
     
     

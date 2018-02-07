@@ -65,7 +65,7 @@ private extension XcodeConfigurationParser {
                     case "{":
                         if let expression = try? ExpressionExtractor(with: string).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
-                         //   resultsDict[key] = try dictionary(from: config.expression)
+                            resultsDict[key] = try dictionary(from: config.expression)
                         }
                     default:
                         break
