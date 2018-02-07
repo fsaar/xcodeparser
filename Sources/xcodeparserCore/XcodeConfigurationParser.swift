@@ -35,11 +35,13 @@ public class XcodeConfigurationParser {
     }
     
     public func parse() throws  -> [String : Any] {
-        let resultsDict = try dicionary(from:self.configuration)
+        let resultsDict = try dictionary(from:self.configuration)
         return resultsDict
     }
-    
-    public func dicionary(from string : String) throws  -> [String : Any] {
+}
+
+private extension XcodeConfigurationParser {
+    func dictionary(from string : String) throws  -> [String : Any] {
         var resultsDict : [String : Any] = [:]
         var currentIndex = string.startIndex
         while currentIndex < string.endIndex {
@@ -63,9 +65,8 @@ public class XcodeConfigurationParser {
                     case "{":
                         if let expression = try? ExpressionExtractor(with: string).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
-                            
+                         //   resultsDict[key] = try dictionary(from: config.expression)
                         }
-        
                     default:
                         break
                     }
@@ -77,13 +78,10 @@ public class XcodeConfigurationParser {
                 currentIndex = string.index(after: currentIndex)
             }
         }
-    
+        
         return resultsDict
     }
-}
-
-
-private extension XcodeConfigurationParser {
+    
     func extractList(from string: String) -> [XcodeSimpleExpression] {
         var list : [XcodeSimpleExpression] = []
         var index = string.startIndex
