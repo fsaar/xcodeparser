@@ -20,16 +20,6 @@ extension String {
         return newIndex
     }
     
-    
-    func range(from nsrange : NSRange) -> Range<String.Index>? {
-        guard nsrange.location != NSNotFound else {
-            return nil
-        }
-        let matchStartIndex = self.index(startIndex, offsetBy: nsrange.location)
-        let matchEndIndex = self.index(matchStartIndex,offsetBy: nsrange.length)
-        return matchStartIndex..<matchEndIndex
-    }
-    
     func value() -> (value:String,range:Range<String.Index>)?  {
         guard let dictRegex = try? NSRegularExpression(pattern: Regex.value.rawValue, options: [.anchorsMatchLines]) else {
             return nil
@@ -38,7 +28,7 @@ extension String {
         guard let result = matches.first,result.numberOfRanges > 1 else {
             return nil
         }
-        guard let range = self.range(from: result.range(at: 1)),let matchedValueRange = self.range(from: result.range(at: 2) ) else {
+        guard let range = Range(result.range(at: 1),in:self),let matchedValueRange = Range(result.range(at: 2),in:self ) else {
             return nil
         }
         let value = String(self[matchedValueRange])
@@ -54,13 +44,13 @@ extension String {
             return nil
         }
         
-        guard let fullRange = self.range(from: result.range(at: 0)),
-            let matchedValueRange = self.range(from: result.range(at: 1)) else {
+        guard let fullRange = Range(result.range(at: 0),in:self),
+            let matchedValueRange = Range(result.range(at: 1),in:self) else {
                 return nil
         }
         let value = String(self[matchedValueRange])
         var comment : String?
-        if result.numberOfRanges > 2,let matchedCommentRange = self.range(from: result.range(at: 3) ) {
+        if result.numberOfRanges > 2,let matchedCommentRange = Range(result.range(at: 3),in:self ) {
             comment = String(self[matchedCommentRange])
         }
         return (value,comment,fullRange)
@@ -75,13 +65,13 @@ extension String {
         guard let result = matches.first,result.numberOfRanges > 1 else {
             return nil
         }
-        guard let range = self.range(from: result.range(at: 1)),let matchedKeyRange = self.range(from: result.range(at: 2) ) else {
+        guard let range = Range(result.range(at: 1),in:self),let matchedKeyRange = Range(result.range(at: 2),in:self ) else {
             return nil
         }
         let key = String(self[matchedKeyRange])
         
         var comment : String?
-        if result.numberOfRanges > 3,let matchedCommentRange = self.range(from: result.range(at: 4) ) {
+        if result.numberOfRanges > 3,let matchedCommentRange = Range(result.range(at: 4),in:self ) {
             comment = String(self[matchedCommentRange])
         }
         return (key,comment,range)
