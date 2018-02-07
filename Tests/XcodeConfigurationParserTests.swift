@@ -95,7 +95,7 @@ class XcodeConfigurationParserTests : XCTestCase {
         let configString =  """
                                 {
                                     OBJ_10 = value1;
-                                    OBJ_11 = (
+                                    OBJ_11/* List */ = (
                                       value2,
                                         value3,
                                     );
@@ -104,8 +104,11 @@ class XcodeConfigurationParserTests : XCTestCase {
         let parser = try! XcodeConfigurationParser(configuration:configString)
         let config = try! parser.parse()
         let value = (config["OBJ_10"] as! XcodeSimpleExpression).value
-        let valueList = config["OBJ_11"] as! [XcodeSimpleExpression]
+        let expression = config["OBJ_11"] as! XcodeListExpression
+        let comment = expression.comment
+        let valueList = expression.value
         XCTAssertEqual(value,"value1")
+        XCTAssertEqual(comment,"List ")
         XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"value2"),XcodeSimpleExpression(value:"value3")])
     }
     func testThatItShouldReadAListConfigurationWithComments() {
@@ -122,7 +125,8 @@ class XcodeConfigurationParserTests : XCTestCase {
         let parser = try! XcodeConfigurationParser(configuration:configString)
         let config = try! parser.parse()
         let value = (config["key1"] as! XcodeSimpleExpression).value
-        let valueList = config["children"] as! [XcodeSimpleExpression]
+         let expression = config["children"] as! XcodeListExpression
+        let valueList = expression.value
         XCTAssertEqual(value,"value1")
         XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserTests::Product\"",comment:"xcodeparserTests.xctest "),
                                     XcodeSimpleExpression(value:"\"xcodeparser::xcodeparser::Product\"",comment:"xcodeparser "),
@@ -141,104 +145,16 @@ class XcodeConfigurationParserTests : XCTestCase {
                             """
         let parser = try! XcodeConfigurationParser(configuration:configString)
         let config = try! parser.parse()
-        let dict = config["OBJ_40"] as! [String:XcodeSimpleExpression]
+        let expression = config["OBJ_40"] as! XcodeDictionaryExpression
+        let comment1 = expression.comment
+        let dict = expression.value as! [String:XcodeSimpleExpression]
         let value1 = dict["isa"]!.value
         let value2 = dict["buildActionMask"]!.value
         let value3 = dict["runOnlyForDeploymentPostprocessing"]!.value
         XCTAssertEqual(value1,"PBXFrameworksBuildPhase")
+        XCTAssertEqual(comment1,"Frameworks ")
         XCTAssertEqual(value2,"0")
         XCTAssertEqual(value3,"1")
     }
-    
-    
-//    func testThatItShouldReadAListConfiguration() {
-//
-//    }
-//
-//    func testThatItShouldReadADictionaryConfigurationWithSimpleKeyValues() {
-//
-//    }
-//
-//    func testThatItShouldReadADictionaryConfigurationWithAList() {
-//
-//    }
-//
-//    func testThatItShouldReadADictionaryConfigurationWithAnotherDictionary() {
-//
-//    }
 
-    
-//    func testThatItShouldShowHelpIfHelpOptionGiven() {
-//        let parser = CommandLineParser(arguments: ["","--help"])
-//        let tuple = try! parser.parseCommandLine()
-//        let expectation : CommandlineParserReturnValue = (nil,nil,.help)
-//        XCTAssert(tuple == expectation)
-//    }
-//
-//    func testThatItShouldShowHelpAndIgnoreOtherArgumentsIfGiven() {
-//        let parser = CommandLineParser(arguments: ["","--help","..","--limit","100"])
-//        let tuple = try! parser.parseCommandLine()
-//        let expectation : CommandlineParserReturnValue = (nil,nil,.help)
-//        XCTAssert(tuple == expectation)
-//    }
-//
-//    func testThatItShouldShowInvalidArgumentsIf1ArgumentGiven() {
-//        let parser = CommandLineParser(arguments: [""])
-//
-//        XCTAssertThrowsError(try parser.parseCommandLine()) { error in
-//            XCTAssertEqual(error as? CommandLineParser.Result, CommandLineParser.Result.notEnoughArguments)
-//        }
-//    }
-//
-//    func testThatItShouldShowInvalidArgumentsIf2ArgumentsGiven() {
-//        let parser = CommandLineParser(arguments: ["",".."])
-//
-//        XCTAssertThrowsError(try parser.parseCommandLine()) { error in
-//            XCTAssertEqual(error as? CommandLineParser.Result, CommandLineParser.Result.notEnoughArguments)
-//        }
-//    }
-//
-//    func testThatItShouldShowInvalidArgumentsIf3ArgumentsGiven() {
-//        let parser = CommandLineParser(arguments: ["","..","--limit"])
-//
-//        XCTAssertThrowsError(try parser.parseCommandLine()) { error in
-//            XCTAssertEqual(error as? CommandLineParser.Result, CommandLineParser.Result.notEnoughArguments)
-//        }
-//    }
-//
-//    func testThatItShouldReturnPathAndLimitIfGiven() {
-//        let path = FileManager.default.currentDirectoryPath
-//        let parser = CommandLineParser(arguments: ["",path,"--limit","100"])
-//        let tuple = try! parser.parseCommandLine()
-//        let expectation : CommandlineParserReturnValue = (URL(fileURLWithPath: path),100,nil)
-//        XCTAssert(tuple == expectation)
-//
-//    }
-//
-//    func testThatItShouldThrowInvalidFormatIf2ndArgumentNotLimit() {
-//        let path = FileManager.default.currentDirectoryPath
-//        let parser = CommandLineParser(arguments: ["",path,"--somethingelse","100"])
-//        XCTAssertThrowsError(try parser.parseCommandLine()) { error in
-//            XCTAssertEqual(error as? CommandLineParser.Result, CommandLineParser.Result.invalidFormat)
-//        }
-//
-//    }
-//
-//    func testThatItShouldReturnTheCorrectFileRestrictionIfGivenSwift() {
-//        let path = FileManager.default.currentDirectoryPath
-//        let parser = CommandLineParser(arguments: ["",path,"--limit","100","--swift"])
-//        let tuple = try! parser.parseCommandLine()
-//        let expectation : CommandlineParserReturnValue = (URL(fileURLWithPath: path),100,.swift)
-//        XCTAssert(tuple == expectation)
-//
-//    }
-//
-//    func testThatItShouldReturnTheCorrectFileRestrictionIfGivenObjectiveC() {
-//        let path = FileManager.default.currentDirectoryPath
-//        let parser = CommandLineParser(arguments: ["",path,"--limit","100","--objc"])
-//        let tuple = try! parser.parseCommandLine()
-//        let expectation : CommandlineParserReturnValue = (URL(fileURLWithPath: path),100,.objc)
-//        XCTAssert(tuple == expectation)
-//
-//    }
 }

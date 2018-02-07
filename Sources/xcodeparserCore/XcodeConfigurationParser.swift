@@ -19,6 +19,30 @@ public struct XcodeSimpleExpression : Equatable {
     }
 }
 
+public struct XcodeListExpression : Equatable {
+    public let value : [XcodeSimpleExpression]
+    public let comment : String?
+    public init (value: [XcodeSimpleExpression],comment: String? = nil) {
+        self.value = value
+        self.comment = comment
+    }
+    static public func ==(lhs : XcodeListExpression,rhs : XcodeListExpression) -> Bool {
+        return lhs.value == rhs.value && lhs.comment == rhs.comment
+    }
+}
+
+public struct XcodeDictionaryExpression {
+    public let value : [String:Any]
+    public let comment : String?
+    public init (value: [String:Any],comment: String? = nil) {
+        self.value = value
+        self.comment = comment
+    }
+    static public func ==(lhs : XcodeDictionaryExpression,rhs : XcodeDictionaryExpression) -> Bool {
+        return Set(lhs.value.keys) == Set(rhs.value.keys) && lhs.comment == rhs.comment
+    }
+}
+
 
 public class XcodeConfigurationParser {
     
@@ -59,13 +83,13 @@ private extension XcodeConfigurationParser {
                     case "(":
                         if let expression = try? ExpressionExtractor(with: string).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
-                            resultsDict[key] = extractList(from: config.expression)
+                            resultsDict[key] = XcodeListExpression(value:extractList(from: config.expression),comment:comment)
                         }
                         
                     case "{":
                         if let expression = try? ExpressionExtractor(with: string).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
-                            resultsDict[key] = try dictionary(from: config.expression)
+                            resultsDict[key] = XcodeDictionaryExpression(value: try dictionary(from: config.expression),comment:comment)
                         }
                     default:
                         break
