@@ -6,44 +6,6 @@
 
 import Foundation
 
-
-public struct XcodeSimpleExpression : Equatable {
-    public let value : String
-    public let comment : String?
-    public init (value: String,comment: String? = nil) {
-        self.value = value
-        self.comment = comment
-    }
-    static public func ==(lhs : XcodeSimpleExpression,rhs : XcodeSimpleExpression) -> Bool {
-        return lhs.value == rhs.value && lhs.comment == rhs.comment
-    }
-}
-
-public struct XcodeListExpression : Equatable {
-    public let value : [XcodeSimpleExpression]
-    public let comment : String?
-    public init (value: [XcodeSimpleExpression],comment: String? = nil) {
-        self.value = value
-        self.comment = comment
-    }
-    static public func ==(lhs : XcodeListExpression,rhs : XcodeListExpression) -> Bool {
-        return lhs.value == rhs.value && lhs.comment == rhs.comment
-    }
-}
-
-public struct XcodeDictionaryExpression {
-    public let value : [String:Any]
-    public let comment : String?
-    public init (value: [String:Any],comment: String? = nil) {
-        self.value = value
-        self.comment = comment
-    }
-    static public func ==(lhs : XcodeDictionaryExpression,rhs : XcodeDictionaryExpression) -> Bool {
-        return Set(lhs.value.keys) == Set(rhs.value.keys) && lhs.comment == rhs.comment
-    }
-}
-
-
 public class XcodeConfigurationParser {
     
     public enum Result : Error {
@@ -89,7 +51,8 @@ private extension XcodeConfigurationParser {
                     case "{":
                         if let expression = try? ExpressionExtractor(with: string).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
-                            resultsDict[key] = XcodeDictionaryExpression(value: try dictionary(from: config.expression),comment:comment)
+                            let innerExpression = String(config.expression.dropFirst().dropLast())
+                            resultsDict[key] = XcodeDictionaryExpression(value: try dictionary(from: innerExpression),comment:comment)
                         }
                     default:
                         break

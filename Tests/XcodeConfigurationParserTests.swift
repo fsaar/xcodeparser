@@ -156,5 +156,40 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertEqual(value2,"0")
         XCTAssertEqual(value3,"1")
     }
+    
+
+    
+    func testThatItShouldReadANestedDictionaryConfiguration() {
+        let configString =  """
+                                {
+                                    OBJ_44 /* Debug */ = {
+                                        buildSettings = {
+                                            ENABLE_TESTABILITY = YES;
+                                            FRAMEWORK_SEARCH_PATHS = (
+                                                "inherited",
+                                                "inherited2",
+                                            );
+                                        };
+                                    };
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse()
+        let expression = config["OBJ_44"] as! XcodeDictionaryExpression
+        let obj_44 = expression.value
+        let comment1 = expression.comment
+        let buildSettings = obj_44["buildSettings"] as! XcodeDictionaryExpression
+        let testability = buildSettings.value["ENABLE_TESTABILITY"] as! XcodeSimpleExpression
+        let searchPaths = buildSettings.value["FRAMEWORK_SEARCH_PATHS"] as! XcodeListExpression
+        let searchPathsList = searchPaths.value
+        let paths = searchPathsList.map { $0.value }
+        XCTAssertEqual(comment1,"Debug ")
+        XCTAssertEqual(testability.value,"YES")
+        XCTAssertEqual(paths, ["\"inherited\"",
+                               "\"inherited2\""])
+
+        
+    }
+
 
 }
