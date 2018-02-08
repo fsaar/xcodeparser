@@ -197,8 +197,8 @@ class XcodeConfigurationParserTests : XCTestCase {
                                         buildSettings = {
                                             ENABLE_TESTABILITY = YES;
                                             FRAMEWORK_SEARCH_PATHS = (
-                                                "inherited",
-                                                "inherited2",
+                                                    "$(inherited)",
+                                                    "$(PLATFORM_DIR)/Developer/Library/Frameworks",
                                             );
                                         };
                                     };
@@ -216,8 +216,8 @@ class XcodeConfigurationParserTests : XCTestCase {
         let paths = searchPathsList.map { $0.value }
         XCTAssertEqual(comment1,"Debug ")
         XCTAssertEqual(testability.value,"YES")
-        XCTAssertEqual(paths, ["\"inherited\"",
-                               "\"inherited2\""])
+        XCTAssertEqual(paths, ["\"$(inherited)\"",
+                               "\"$(PLATFORM_DIR)/Developer/Library/Frameworks\""])
 
         
     }
