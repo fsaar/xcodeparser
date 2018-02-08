@@ -40,6 +40,20 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertEqual(key,"key")
     }
     
+    func testThatItShouldReadAKeyValueConfigurationWithQuotes() {
+        let configString =  """
+                                {
+                                    key = "xcodeparser::xcodeparserCore";
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse() as! [String:XcodeSimpleExpression]
+        let key = config.keys.first!
+        let value = config.values.first!.value
+        XCTAssertEqual(value,"\"xcodeparser::xcodeparserCore\"")
+        XCTAssertEqual(key,"key")
+    }
+    
     func testThatItShouldReadAKeyValueConfigurationWithInitialCommentsAtTheTop() {
         let configString =  """
                                 // !$*UTF8*$!
@@ -111,6 +125,23 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertEqual(comment,"List ")
         XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"value2"),XcodeSimpleExpression(value:"value3")])
     }
+    
+    func testThatItShouldReadAListConfigurationWithDifferentListCharacterSequences() {
+        let configString =  """
+                                {
+                                    OBJ_10 = (
+                                      "$(inherited)",
+                                        "inherited2",
+                                        inherited3
+                                    );
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse()
+        let valueList = (config["OBJ_10"] as! XcodeListExpression).value
+        XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"\"$(inherited)\""),XcodeSimpleExpression(value:"\"inherited2\""),XcodeSimpleExpression(value:"inherited3")])
+    }
+    
     func testThatItShouldReadAListConfigurationWithComments() {
         let configString =  """
                                 {

@@ -9,8 +9,10 @@ import Foundation
 enum Regex : String {
     case keyCommentEqualComment = "^([{(]?\\s*(\\w+)\\s*(\\/\\*\\s*([\\s\\w]*)\\*\\/)?\\s*=\\s*).*$"
     case value = "^\\s*(([\":\\w]+)\\s*;\\s*$)"
-    case listValue = "[{(]?\\s*([\":\\w]+)\\s*(\\/\\*\\s*([\\s\\w\\.]*)\\*\\/)?\\s*[)},]?"
+    case listValue = "[{(]?\\s*((\"[:\\w]+\")|([:\\w]+)|(\"\\$\\([:\\w]+\\)\"))\\s*(\\/\\*\\s*([\\s\\w\\.]*)\\*\\/)?\\s*[)},]?"
 }
+
+//|(\"[(][:\\w]+\"[)])
 
 extension String {
     
@@ -45,12 +47,12 @@ extension String {
         }
         
         guard let fullRange = Range(result.range(at: 0),in:self),
-            let matchedValueRange = Range(result.range(at: 1),in:self) else {
+            let matchedValueRange = Range(result.range(at: 2),in:self) ?? Range(result.range(at: 3),in:self) ?? Range(result.range(at: 4),in:self) else {
                 return nil
         }
         let value = String(self[matchedValueRange])
         var comment : String?
-        if result.numberOfRanges > 2,let matchedCommentRange = Range(result.range(at: 3),in:self ) {
+        if result.numberOfRanges > 5,let matchedCommentRange = Range(result.range(at: 6),in:self ) {
             comment = String(self[matchedCommentRange])
         }
         return (value,comment,fullRange)
