@@ -58,15 +58,31 @@ class XcodeConfigurationParserTests : XCTestCase {
         let configString =  """
                                 // !$*UTF8*$!
                                 {
-                                    key = value;
+                                     isa = PBXBuildFile;
                                 }
                             """
         let parser = try! XcodeConfigurationParser(configuration:configString)
         let config = try! parser.parse() as! [String:XcodeSimpleExpression]
         let key = config.keys.first!
         let value = config.values.first!.value
-        XCTAssertEqual(value,"value")
-        XCTAssertEqual(key,"key")
+        XCTAssertEqual(key,"isa")
+        XCTAssertEqual(value,"PBXBuildFile")
+    }
+    
+    func testThatItShouldReadAKeyValueConfigurationWithAnEmptyDictionary() {
+        let configString =  """
+                               
+                                {
+                                     classes = {};
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse()
+        let key = config.keys.first!
+        let dict = config["classes"] as! XcodeDictionaryExpression
+        XCTAssertEqual(key,"classes")
+        XCTAssertEqual(dict.value.keys.isEmpty, true)
+       
     }
     
     func testThatItShouldReadAKeyValueConfigurationWithMultipleEntries() {
@@ -90,7 +106,7 @@ class XcodeConfigurationParserTests : XCTestCase {
                                     key1 = value1;
                                     key2 = value2;
                                     key3 = value3;
-                                    key4 /* comment 4 */ = value4;
+                                    key4 /* comment_ 4 */ = value4;
                                 }
                             """
         let parser = try! XcodeConfigurationParser(configuration:configString)
@@ -102,7 +118,7 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertEqual(value,"value1")
         XCTAssertEqual(value2,"value2")
         XCTAssertEqual(value3,"value3")
-        XCTAssertEqual(expression,XcodeSimpleExpression(value:"value4",comment:"comment 4 "))
+        XCTAssertEqual(expression,XcodeSimpleExpression(value:"value4",comment:"comment_ 4 "))
     }
     
     func testThatItShouldReadAListConfiguration() {
@@ -218,9 +234,50 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertEqual(testability.value,"YES")
         XCTAssertEqual(paths, ["\"$(inherited)\"",
                                "\"$(PLATFORM_DIR)/Developer/Library/Frameworks\""])
-
-        
     }
-
+    
+    //                                    archiveVersion = 1;
+    //                                    classes = {
+    //                                    };
+    //                                    objectVersion = 46;
+    func testThatItShouldRealConfigurationExampleCorrectly() {
+        let configString = """
+                                // !$*UTF8*$!
+                                {
+                                    archiveVersion = 1;
+                                    classes = {
+                                    };
+                                    objectVersion = 46;
+                                    objects = {
+                                        2C659326B6D6A9829EDDAFC3 = {isa = PBXBuildFile; fileRef = E391093442B4E54575D4146B; };
+                                        
+                                    }
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse()
+        let objects = config["objects"] as! XcodeDictionaryExpression
+        print(objects.value)
+//        let archiveVersion = config["archiveVersion"] as! XcodeSimpleExpression
+//        let objectVersion = config["objectVersion"] as! XcodeSimpleExpression
+//        XCTAssertEqual(archiveVersion, XcodeSimpleExpression(value: "1", comment: nil))
+//        XCTAssertEqual(objectVersion, XcodeSimpleExpression(value: "46", comment: nil))
+    }
+    
+//    func testThatItShouldReadTFLProjectFile() {
+//        let url = Bundle(for: type(of:self)) .url(forResource: "tflproject", withExtension: "sample")
+//        let project = try! String(contentsOf: url!)
+//        let parser = try! XcodeConfigurationParser(configuration:project)
+//        XCTAssertNoThrow(try parser.parse())
+//    }
+//
+//    func testThatItShouldReadTFLProjectFileCorrectly() {
+//        let url = Bundle(for: type(of:self)) .url(forResource: "tflproject", withExtension: "sample")
+//        let project = try! String(contentsOf: url!)
+//        let parser = try! XcodeConfigurationParser(configuration:project)
+//        let dict = try! parser.parse()
+//        let objects = dict["objects"]
+//        print(objects)
+//    }
 
 }

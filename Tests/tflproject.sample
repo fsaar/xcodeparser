@@ -1,0 +1,1048 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2C659326B6D6A9829EDDAFC3 /* Pods_tflApp_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E391093442B4E54575D4146B /* Pods_tflApp_Tests.framework */; };
+		412222F26B670B4DE4DA2909 /* libPods-tflapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A103EB36E89F05E8B43D63BE /* libPods-tflapp.a */; };
+		561FD9021F1FB1F50012466A /* TFLClientSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561FD9011F1FADD30012466A /* TFLClientSpecs.swift */; };
+		562DBF5A1E05B6780028F3CD /* TFLSnapHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562DBF591E05B6780028F3CD /* TFLSnapHandler.swift */; };
+		5641F6EE1F19F68B00A3A9D2 /* TFLRequestManagerSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5641F6ED1F19F68100A3A9D2 /* TFLRequestManagerSpecs.swift */; };
+		5646C4031DE62389006EA956 /* TFLBusStationArrivalsCellSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5646C4021DE62389006EA956 /* TFLBusStationArrivalsCellSpecs.swift */; };
+		564EC6F51DE0A2A0008CFD11 /* TFLButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EC6F41DE0A2A0008CFD11 /* TFLButton.swift */; };
+		564EC6FA1DE0DC1C008CFD11 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 564EC6F81DE0DC1C008CFD11 /* Fabric.framework */; };
+		564EC6FB1DE0DC1C008CFD11 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 564EC6F91DE0DC1C008CFD11 /* Crashlytics.framework */; };
+		564EC6FD1DE10272008CFD11 /* Crashlytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EC6FC1DE10272008CFD11 /* Crashlytics.swift */; };
+		564EC7051DE1917D008CFD11 /* TFLBusPredictionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EC6FF1DE1917D008CFD11 /* TFLBusPredictionView.swift */; };
+		564EC7061DE1917D008CFD11 /* TFLBusPredictionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EC7001DE1917D008CFD11 /* TFLBusPredictionViewCell.swift */; };
+		564EC7071DE1917D008CFD11 /* TFLBusStationArrivalsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EC7011DE1917D008CFD11 /* TFLBusStationArrivalsCell.swift */; };
+		564EC7081DE1917D008CFD11 /* TFLBusStopArrivalsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EC7021DE1917D008CFD11 /* TFLBusStopArrivalsInfo.swift */; };
+		564EC70A1DE1917D008CFD11 /* TFLNearbyBusStationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EC7041DE1917D008CFD11 /* TFLNearbyBusStationsController.swift */; };
+		5657D3711DE38ADF004E4CD0 /* TFLBusPredictionSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5657D3701DE38ADF004E4CD0 /* TFLBusPredictionSpecs.swift */; };
+		5657D3731DE3A00A004E4CD0 /* TFLCDBusStopSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5657D3721DE3A00A004E4CD0 /* TFLCDBusStopSpecs.swift */; };
+		5657D3751DE3B480004E4CD0 /* TFLNotificationObserverSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5657D3741DE3B480004E4CD0 /* TFLNotificationObserverSpec.swift */; };
+		565A1FC31DD8F317003CE960 /* TLFRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565A1FC21DD8F317003CE960 /* TLFRequestManager.swift */; };
+		565A1FC51DD8F331003CE960 /* TLFClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565A1FC41DD8F331003CE960 /* TLFClient.swift */; };
+		565A1FC81DD8F6E6003CE960 /* TFLCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565A1FC71DD8F6E6003CE960 /* TFLCoreDataStack.swift */; };
+		565A1FCF1DD8F93F003CE960 /* TFLNotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 565A1FCE1DD8F93F003CE960 /* TFLNotificationObserver.swift */; };
+		565A1FD21DD8FB2A003CE960 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 565A1FD01DD8FB2A003CE960 /* Model.xcdatamodeld */; };
+		566EF7C71DDA3A2B006162D7 /* TFLBusPrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EF7C61DDA3A2B006162D7 /* TFLBusPrediction.swift */; };
+		566EF7CC1DDB0851006162D7 /* TFLCDBusStop+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EF7CA1DDB0851006162D7 /* TFLCDBusStop+CoreDataClass.swift */; };
+		566EF7CD1DDB0851006162D7 /* TFLCDBusStop+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EF7CB1DDB0851006162D7 /* TFLCDBusStop+CoreDataProperties.swift */; };
+		566EF7D11DDB5685006162D7 /* TFLBusStops.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 566EF7D01DDB5679006162D7 /* TFLBusStops.sqlite */; };
+		566EF7D31DDB71CE006162D7 /* TFLBusStopStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EF7D21DDB71CE006162D7 /* TFLBusStopStack.swift */; };
+		566EF7D71DDC4D14006162D7 /* TFLRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EF7D61DDC4D14006162D7 /* TFLRootViewController.swift */; };
+		566EF7E21DDC59ED006162D7 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EF7E11DDC59ED006162D7 /* UIFont.swift */; };
+		56823EA61DDDA39600E79B1A /* TFLLoadLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56823EA51DDDA39600E79B1A /* TFLLoadLocationView.swift */; };
+		56823EA81DDDA45600E79B1A /* TFLLoadNearbyStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56823EA71DDDA45600E79B1A /* TFLLoadNearbyStationsView.swift */; };
+		56823EAA1DDDA4CC00E79B1A /* TFLNoStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56823EA91DDDA4CC00E79B1A /* TFLNoStationsView.swift */; };
+		56823EAC1DDDA54100E79B1A /* TFLLoadArrivalTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56823EAB1DDDA54100E79B1A /* TFLLoadArrivalTimesView.swift */; };
+		56823EAE1DDDA5B300E79B1A /* TFLNoGPSEnabledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56823EAD1DDDA5B300E79B1A /* TFLNoGPSEnabledView.swift */; };
+		5685ADC41DEF8DDC009FD6A5 /* TFLBusPredictionViewCellSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5685ADC31DEF8DDC009FD6A5 /* TFLBusPredictionViewCellSpecs.swift */; };
+		5692B5001DF2E26300C56A3C /* TFLSlideContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5692B4FF1DF2E26300C56A3C /* TFLSlideContainerController.swift */; };
+		5692B5031DF2E4EB00C56A3C /* TFLMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5692B5021DF2E4EB00C56A3C /* TFLMapViewController.swift */; };
+		5692B5071DF2F15F00C56A3C /* TFLNearbyBackgroundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5692B5061DF2F15F00C56A3C /* TFLNearbyBackgroundController.swift */; };
+		56A81B2F1DD862DC001DF7F1 /* TFLAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A81B2E1DD862DC001DF7F1 /* TFLAppDelegate.swift */; };
+		56A81B341DD862DC001DF7F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56A81B321DD862DC001DF7F1 /* Main.storyboard */; };
+		56A81B391DD862DC001DF7F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56A81B381DD862DC001DF7F1 /* Assets.xcassets */; };
+		56A81B3C1DD862DC001DF7F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56A81B3A1DD862DC001DF7F1 /* LaunchScreen.storyboard */; };
+		56AB9FAC1DE8D95A00A9042A /* TFLChangeSetProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AB9FAB1DE8D95A00A9042A /* TFLChangeSetProtocol.swift */; };
+		56B86EAD1DE4FED000A89D16 /* TFLBusStopArrivalsViewModelSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B86EAC1DE4FED000A89D16 /* TFLBusStopArrivalsViewModelSpecs.swift */; };
+		56C2D6DC1DE5D6B000F43628 /* TFLBusStopArrivalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EC7031DE1917D008CFD11 /* TFLBusStopArrivalsViewModel.swift */; };
+		56C6A3471DF44F6A00067D06 /* TFLMapViewAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C6A3461DF44F6A00067D06 /* TFLMapViewAnnotation.swift */; };
+		56C828901DE8E9FA00E52086 /* TFLChangeSetProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C8288F1DE8E9FA00E52086 /* TFLChangeSetProtocol.swift */; };
+		56C828921DE9859D00E52086 /* TFLTransitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C828911DE9859D00E52086 /* TFLTransitionable.swift */; };
+		56C828941DE9CDB900E52086 /* TFLTransitionableSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C828931DE9CDB900E52086 /* TFLTransitionableSpecs.swift */; };
+		56C828961DEA396400E52086 /* TFLCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C828951DEA396400E52086 /* TFLCollectionFlowLayout.swift */; };
+		56D0AF331E141D2C00F466C4 /* TFLAnimiatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D0AF321E141D2C00F466C4 /* TFLAnimiatedLabel.swift */; };
+		56D0AF351E147C6F00F466C4 /* TFLAnimationLabelSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D0AF341E147C6F00F466C4 /* TFLAnimationLabelSpecs.swift */; };
+		56D70D141DD9A25F004CA293 /* TFLLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D70D131DD9A25F004CA293 /* TFLLocationManager.swift */; };
+		56D70D341DD9A7A6004CA293 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 56D70D301DD9A7A6004CA293 /* InfoPlist.strings */; };
+		56D70D351DD9A7A6004CA293 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 56D70D321DD9A7A6004CA293 /* Localizable.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5657D36B1DE387E6004E4CD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56A81B231DD862DC001DF7F1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56A81B2A1DD862DC001DF7F1;
+			remoteInfo = tflapp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		09B8C602EFB434FF269AB5A9 /* Pods-tflapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tflapp.release.xcconfig"; path = "Pods/Target Support Files/Pods-tflapp/Pods-tflapp.release.xcconfig"; sourceTree = "<group>"; };
+		29D20D8BDB3378F1D7CC9DAE /* Pods-tflapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tflapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tflapp/Pods-tflapp.debug.xcconfig"; sourceTree = "<group>"; };
+		561FD9011F1FADD30012466A /* TFLClientSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFLClientSpecs.swift; sourceTree = "<group>"; };
+		562DBF591E05B6780028F3CD /* TFLSnapHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLSnapHandler.swift; sourceTree = "<group>"; };
+		5641F6ED1F19F68100A3A9D2 /* TFLRequestManagerSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFLRequestManagerSpecs.swift; sourceTree = "<group>"; };
+		5646C4021DE62389006EA956 /* TFLBusStationArrivalsCellSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusStationArrivalsCellSpecs.swift; sourceTree = "<group>"; };
+		564EC6EF1DDFAA67008CFD11 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		564EC6F41DE0A2A0008CFD11 /* TFLButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLButton.swift; sourceTree = "<group>"; };
+		564EC6F81DE0DC1C008CFD11 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		564EC6F91DE0DC1C008CFD11 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		564EC6FC1DE10272008CFD11 /* Crashlytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crashlytics.swift; sourceTree = "<group>"; };
+		564EC6FF1DE1917D008CFD11 /* TFLBusPredictionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusPredictionView.swift; sourceTree = "<group>"; };
+		564EC7001DE1917D008CFD11 /* TFLBusPredictionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusPredictionViewCell.swift; sourceTree = "<group>"; };
+		564EC7011DE1917D008CFD11 /* TFLBusStationArrivalsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusStationArrivalsCell.swift; sourceTree = "<group>"; };
+		564EC7021DE1917D008CFD11 /* TFLBusStopArrivalsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusStopArrivalsInfo.swift; sourceTree = "<group>"; };
+		564EC7031DE1917D008CFD11 /* TFLBusStopArrivalsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusStopArrivalsViewModel.swift; sourceTree = "<group>"; };
+		564EC7041DE1917D008CFD11 /* TFLNearbyBusStationsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLNearbyBusStationsController.swift; sourceTree = "<group>"; };
+		5657D3661DE387E6004E4CD0 /* tflApp Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "tflApp Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5657D36A1DE387E6004E4CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5657D3701DE38ADF004E4CD0 /* TFLBusPredictionSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusPredictionSpecs.swift; sourceTree = "<group>"; };
+		5657D3721DE3A00A004E4CD0 /* TFLCDBusStopSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLCDBusStopSpecs.swift; sourceTree = "<group>"; };
+		5657D3741DE3B480004E4CD0 /* TFLNotificationObserverSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLNotificationObserverSpec.swift; sourceTree = "<group>"; };
+		565A1FC21DD8F317003CE960 /* TLFRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLFRequestManager.swift; sourceTree = "<group>"; };
+		565A1FC41DD8F331003CE960 /* TLFClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLFClient.swift; sourceTree = "<group>"; };
+		565A1FC71DD8F6E6003CE960 /* TFLCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLCoreDataStack.swift; sourceTree = "<group>"; };
+		565A1FCE1DD8F93F003CE960 /* TFLNotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLNotificationObserver.swift; sourceTree = "<group>"; };
+		565A1FD11DD8FB2A003CE960 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		566EF7C61DDA3A2B006162D7 /* TFLBusPrediction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusPrediction.swift; sourceTree = "<group>"; };
+		566EF7CA1DDB0851006162D7 /* TFLCDBusStop+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TFLCDBusStop+CoreDataClass.swift"; sourceTree = "<group>"; };
+		566EF7CB1DDB0851006162D7 /* TFLCDBusStop+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TFLCDBusStop+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		566EF7D01DDB5679006162D7 /* TFLBusStops.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TFLBusStops.sqlite; sourceTree = "<group>"; };
+		566EF7D21DDB71CE006162D7 /* TFLBusStopStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusStopStack.swift; sourceTree = "<group>"; };
+		566EF7D61DDC4D14006162D7 /* TFLRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLRootViewController.swift; sourceTree = "<group>"; };
+		566EF7E11DDC59ED006162D7 /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		566EF7E31DDC5D69006162D7 /* tflapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tflapp.entitlements; sourceTree = "<group>"; };
+		56823EA51DDDA39600E79B1A /* TFLLoadLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLLoadLocationView.swift; sourceTree = "<group>"; };
+		56823EA71DDDA45600E79B1A /* TFLLoadNearbyStationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLLoadNearbyStationsView.swift; sourceTree = "<group>"; };
+		56823EA91DDDA4CC00E79B1A /* TFLNoStationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLNoStationsView.swift; sourceTree = "<group>"; };
+		56823EAB1DDDA54100E79B1A /* TFLLoadArrivalTimesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLLoadArrivalTimesView.swift; sourceTree = "<group>"; };
+		56823EAD1DDDA5B300E79B1A /* TFLNoGPSEnabledView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLNoGPSEnabledView.swift; sourceTree = "<group>"; };
+		5685ADC31DEF8DDC009FD6A5 /* TFLBusPredictionViewCellSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusPredictionViewCellSpecs.swift; sourceTree = "<group>"; };
+		5692B4FF1DF2E26300C56A3C /* TFLSlideContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLSlideContainerController.swift; sourceTree = "<group>"; };
+		5692B5021DF2E4EB00C56A3C /* TFLMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLMapViewController.swift; sourceTree = "<group>"; };
+		5692B5061DF2F15F00C56A3C /* TFLNearbyBackgroundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLNearbyBackgroundController.swift; sourceTree = "<group>"; };
+		56A81B2B1DD862DC001DF7F1 /* London Bus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "London Bus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		56A81B2E1DD862DC001DF7F1 /* TFLAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFLAppDelegate.swift; sourceTree = "<group>"; };
+		56A81B331DD862DC001DF7F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		56A81B381DD862DC001DF7F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		56A81B3B1DD862DC001DF7F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		56A81B3D1DD862DC001DF7F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		56AB9FAB1DE8D95A00A9042A /* TFLChangeSetProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLChangeSetProtocol.swift; sourceTree = "<group>"; };
+		56B86EAC1DE4FED000A89D16 /* TFLBusStopArrivalsViewModelSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLBusStopArrivalsViewModelSpecs.swift; sourceTree = "<group>"; };
+		56C6A3461DF44F6A00067D06 /* TFLMapViewAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLMapViewAnnotation.swift; sourceTree = "<group>"; };
+		56C8288F1DE8E9FA00E52086 /* TFLChangeSetProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLChangeSetProtocol.swift; sourceTree = "<group>"; };
+		56C828911DE9859D00E52086 /* TFLTransitionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLTransitionable.swift; sourceTree = "<group>"; };
+		56C828931DE9CDB900E52086 /* TFLTransitionableSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLTransitionableSpecs.swift; sourceTree = "<group>"; };
+		56C828951DEA396400E52086 /* TFLCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLCollectionFlowLayout.swift; sourceTree = "<group>"; };
+		56D0AF321E141D2C00F466C4 /* TFLAnimiatedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLAnimiatedLabel.swift; sourceTree = "<group>"; };
+		56D0AF341E147C6F00F466C4 /* TFLAnimationLabelSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLAnimationLabelSpecs.swift; sourceTree = "<group>"; };
+		56D70D131DD9A25F004CA293 /* TFLLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFLLocationManager.swift; sourceTree = "<group>"; };
+		56D70D311DD9A7A6004CA293 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		56D70D331DD9A7A6004CA293 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7A89F45A39DFA1D633B11475 /* Pods-tflApp Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tflApp Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-tflApp Tests/Pods-tflApp Tests.release.xcconfig"; sourceTree = "<group>"; };
+		A103EB36E89F05E8B43D63BE /* libPods-tflapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tflapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEB656AE4FFADE13DD37A13F /* Pods-tflApp Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tflApp Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tflApp Tests/Pods-tflApp Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		E391093442B4E54575D4146B /* Pods_tflApp_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tflApp_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5657D3631DE387E6004E4CD0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C659326B6D6A9829EDDAFC3 /* Pods_tflApp_Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56A81B281DD862DC001DF7F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				564EC6FB1DE0DC1C008CFD11 /* Crashlytics.framework in Frameworks */,
+				564EC6FA1DE0DC1C008CFD11 /* Fabric.framework in Frameworks */,
+				412222F26B670B4DE4DA2909 /* libPods-tflapp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		564EC6F31DE0A289008CFD11 /* TFLButton */ = {
+			isa = PBXGroup;
+			children = (
+				564EC6F41DE0A2A0008CFD11 /* TFLButton.swift */,
+			);
+			path = TFLButton;
+			sourceTree = "<group>";
+		};
+		564EC6F71DE0DC0E008CFD11 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				564EC6F81DE0DC1C008CFD11 /* Fabric.framework */,
+				564EC6F91DE0DC1C008CFD11 /* Crashlytics.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		564EC6FE1DE1917D008CFD11 /* TFLNearbyBusStationsController */ = {
+			isa = PBXGroup;
+			children = (
+				564EC6FF1DE1917D008CFD11 /* TFLBusPredictionView.swift */,
+				564EC7001DE1917D008CFD11 /* TFLBusPredictionViewCell.swift */,
+				564EC7011DE1917D008CFD11 /* TFLBusStationArrivalsCell.swift */,
+				564EC7021DE1917D008CFD11 /* TFLBusStopArrivalsInfo.swift */,
+				564EC7031DE1917D008CFD11 /* TFLBusStopArrivalsViewModel.swift */,
+				564EC7041DE1917D008CFD11 /* TFLNearbyBusStationsController.swift */,
+				56C828951DEA396400E52086 /* TFLCollectionFlowLayout.swift */,
+				5692B5061DF2F15F00C56A3C /* TFLNearbyBackgroundController.swift */,
+			);
+			path = TFLNearbyBusStationsController;
+			sourceTree = "<group>";
+		};
+		5657D3671DE387E6004E4CD0 /* tflApp Tests */ = {
+			isa = PBXGroup;
+			children = (
+				561FD9011F1FADD30012466A /* TFLClientSpecs.swift */,
+				5641F6ED1F19F68100A3A9D2 /* TFLRequestManagerSpecs.swift */,
+				56D0AF341E147C6F00F466C4 /* TFLAnimationLabelSpecs.swift */,
+				5657D3701DE38ADF004E4CD0 /* TFLBusPredictionSpecs.swift */,
+				5657D3721DE3A00A004E4CD0 /* TFLCDBusStopSpecs.swift */,
+				5657D3741DE3B480004E4CD0 /* TFLNotificationObserverSpec.swift */,
+				56B86EAC1DE4FED000A89D16 /* TFLBusStopArrivalsViewModelSpecs.swift */,
+				5646C4021DE62389006EA956 /* TFLBusStationArrivalsCellSpecs.swift */,
+				5685ADC31DEF8DDC009FD6A5 /* TFLBusPredictionViewCellSpecs.swift */,
+				56C8288F1DE8E9FA00E52086 /* TFLChangeSetProtocol.swift */,
+				56C828931DE9CDB900E52086 /* TFLTransitionableSpecs.swift */,
+				5657D36A1DE387E6004E4CD0 /* Info.plist */,
+			);
+			path = "tflApp Tests";
+			sourceTree = "<group>";
+		};
+		565A1FC11DD8F317003CE960 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				565A1FC21DD8F317003CE960 /* TLFRequestManager.swift */,
+				565A1FC41DD8F331003CE960 /* TLFClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		565A1FC61DD8F6D9003CE960 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				566EF7CA1DDB0851006162D7 /* TFLCDBusStop+CoreDataClass.swift */,
+				566EF7CB1DDB0851006162D7 /* TFLCDBusStop+CoreDataProperties.swift */,
+				565A1FC71DD8F6E6003CE960 /* TFLCoreDataStack.swift */,
+				566EF7D21DDB71CE006162D7 /* TFLBusStopStack.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		565A1FC91DD8F8D1003CE960 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				56D0AF311E141D0F00F466C4 /* TFLAnimatedLabel */,
+				564EC6F31DE0A289008CFD11 /* TFLButton */,
+				566EF7E01DDC59D9006162D7 /* Extensions */,
+				56D70D121DD9A24E004CA293 /* TFLLocationManager */,
+				565A1FCD1DD8F93F003CE960 /* TFLNotificationObserver */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		565A1FCD1DD8F93F003CE960 /* TFLNotificationObserver */ = {
+			isa = PBXGroup;
+			children = (
+				565A1FCE1DD8F93F003CE960 /* TFLNotificationObserver.swift */,
+			);
+			path = TFLNotificationObserver;
+			sourceTree = "<group>";
+		};
+		566EF7C31DDA2D31006162D7 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				566EF7C61DDA3A2B006162D7 /* TFLBusPrediction.swift */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
+		566EF7D41DDC4D14006162D7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5692B5011DF2E4C200C56A3C /* TFLMapViewController */,
+				5692B4FE1DF2E21100C56A3C /* TFLSlideContainerController */,
+				564EC6FE1DE1917D008CFD11 /* TFLNearbyBusStationsController */,
+				566EF7D51DDC4D14006162D7 /* TFLRootViewController */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		566EF7D51DDC4D14006162D7 /* TFLRootViewController */ = {
+			isa = PBXGroup;
+			children = (
+				566EF7D61DDC4D14006162D7 /* TFLRootViewController.swift */,
+				56823EAD1DDDA5B300E79B1A /* TFLNoGPSEnabledView.swift */,
+				56823EAB1DDDA54100E79B1A /* TFLLoadArrivalTimesView.swift */,
+				56823EA91DDDA4CC00E79B1A /* TFLNoStationsView.swift */,
+				56823EA51DDDA39600E79B1A /* TFLLoadLocationView.swift */,
+				56823EA71DDDA45600E79B1A /* TFLLoadNearbyStationsView.swift */,
+			);
+			path = TFLRootViewController;
+			sourceTree = "<group>";
+		};
+		566EF7E01DDC59D9006162D7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				564EC6FC1DE10272008CFD11 /* Crashlytics.swift */,
+				566EF7E11DDC59ED006162D7 /* UIFont.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5692B4FE1DF2E21100C56A3C /* TFLSlideContainerController */ = {
+			isa = PBXGroup;
+			children = (
+				5692B4FF1DF2E26300C56A3C /* TFLSlideContainerController.swift */,
+				562DBF591E05B6780028F3CD /* TFLSnapHandler.swift */,
+			);
+			path = TFLSlideContainerController;
+			sourceTree = "<group>";
+		};
+		5692B5011DF2E4C200C56A3C /* TFLMapViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5692B5021DF2E4EB00C56A3C /* TFLMapViewController.swift */,
+				56C6A3461DF44F6A00067D06 /* TFLMapViewAnnotation.swift */,
+			);
+			path = TFLMapViewController;
+			sourceTree = "<group>";
+		};
+		56A81B221DD862DC001DF7F1 = {
+			isa = PBXGroup;
+			children = (
+				56A81B2D1DD862DC001DF7F1 /* tflapp */,
+				5657D3671DE387E6004E4CD0 /* tflApp Tests */,
+				56A81B2C1DD862DC001DF7F1 /* Products */,
+				B6405A0BEDCDF1FE409534F9 /* Pods */,
+				FE001E57A0E40DC9805C38C7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		56A81B2C1DD862DC001DF7F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				56A81B2B1DD862DC001DF7F1 /* London Bus.app */,
+				5657D3661DE387E6004E4CD0 /* tflApp Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		56A81B2D1DD862DC001DF7F1 /* tflapp */ = {
+			isa = PBXGroup;
+			children = (
+				56AB9FA91DE8D94000A9042A /* Protocols */,
+				566EF7C31DDA2D31006162D7 /* DataModel */,
+				565A1FC91DD8F8D1003CE960 /* Common */,
+				565A1FC11DD8F317003CE960 /* Network */,
+				565A1FC61DD8F6D9003CE960 /* CoreData */,
+				56A81B2E1DD862DC001DF7F1 /* TFLAppDelegate.swift */,
+				566EF7D41DDC4D14006162D7 /* ViewController */,
+				56A81B321DD862DC001DF7F1 /* Main.storyboard */,
+				56A81B381DD862DC001DF7F1 /* Assets.xcassets */,
+				56A81B3A1DD862DC001DF7F1 /* LaunchScreen.storyboard */,
+				566EF7E31DDC5D69006162D7 /* tflapp.entitlements */,
+				56A81B3D1DD862DC001DF7F1 /* Info.plist */,
+				56D70D2F1DD9A7A6004CA293 /* Localization */,
+				566EF7D01DDB5679006162D7 /* TFLBusStops.sqlite */,
+				565A1FD01DD8FB2A003CE960 /* Model.xcdatamodeld */,
+				564EC6EF1DDFAA67008CFD11 /* LICENSE */,
+				564EC6F71DE0DC0E008CFD11 /* Frameworks */,
+			);
+			path = tflapp;
+			sourceTree = "<group>";
+		};
+		56AB9FA91DE8D94000A9042A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				56AB9FAB1DE8D95A00A9042A /* TFLChangeSetProtocol.swift */,
+				56C828911DE9859D00E52086 /* TFLTransitionable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		56D0AF311E141D0F00F466C4 /* TFLAnimatedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				56D0AF321E141D2C00F466C4 /* TFLAnimiatedLabel.swift */,
+			);
+			path = TFLAnimatedLabel;
+			sourceTree = "<group>";
+		};
+		56D70D121DD9A24E004CA293 /* TFLLocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				56D70D131DD9A25F004CA293 /* TFLLocationManager.swift */,
+			);
+			path = TFLLocationManager;
+			sourceTree = "<group>";
+		};
+		56D70D2F1DD9A7A6004CA293 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				56D70D301DD9A7A6004CA293 /* InfoPlist.strings */,
+				56D70D321DD9A7A6004CA293 /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		B6405A0BEDCDF1FE409534F9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BEB656AE4FFADE13DD37A13F /* Pods-tflApp Tests.debug.xcconfig */,
+				7A89F45A39DFA1D633B11475 /* Pods-tflApp Tests.release.xcconfig */,
+				29D20D8BDB3378F1D7CC9DAE /* Pods-tflapp.debug.xcconfig */,
+				09B8C602EFB434FF269AB5A9 /* Pods-tflapp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FE001E57A0E40DC9805C38C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E391093442B4E54575D4146B /* Pods_tflApp_Tests.framework */,
+				A103EB36E89F05E8B43D63BE /* libPods-tflapp.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5657D3651DE387E6004E4CD0 /* tflApp Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5657D36F1DE387E6004E4CD0 /* Build configuration list for PBXNativeTarget "tflApp Tests" */;
+			buildPhases = (
+				CA12D93F7484B0C6E06F9920 /* [CP] Check Pods Manifest.lock */,
+				5657D3621DE387E6004E4CD0 /* Sources */,
+				5657D3631DE387E6004E4CD0 /* Frameworks */,
+				5657D3641DE387E6004E4CD0 /* Resources */,
+				4B310D95D34D5BED18455079 /* [CP] Embed Pods Frameworks */,
+				B5ACE26E6374F6550AC45E8A /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5657D36C1DE387E6004E4CD0 /* PBXTargetDependency */,
+			);
+			name = "tflApp Tests";
+			productName = "tflApp Tests";
+			productReference = 5657D3661DE387E6004E4CD0 /* tflApp Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		56A81B2A1DD862DC001DF7F1 /* tflapp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56A81B401DD862DC001DF7F1 /* Build configuration list for PBXNativeTarget "tflapp" */;
+			buildPhases = (
+				E665C226CB022DA33D91ED39 /* [CP] Check Pods Manifest.lock */,
+				564EC6F11DDFE180008CFD11 /* Inject API Keys */,
+				56A81B271DD862DC001DF7F1 /* Sources */,
+				56A81B281DD862DC001DF7F1 /* Frameworks */,
+				56A81B291DD862DC001DF7F1 /* Resources */,
+				564EC6F21DDFE205008CFD11 /* Remove API Keys */,
+				564EC6F61DE0DA8D008CFD11 /* Fabrics */,
+				5CCA668F6EB7B436258B28AA /* [CP] Embed Pods Frameworks */,
+				AC828CD492670DF6F91697A8 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tflapp;
+			productName = tflapp;
+			productReference = 56A81B2B1DD862DC001DF7F1 /* London Bus.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		56A81B231DD862DC001DF7F1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = SAMedialabs;
+				TargetAttributes = {
+					5657D3651DE387E6004E4CD0 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = RF4LJPC23U;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 56A81B2A1DD862DC001DF7F1;
+					};
+					56A81B2A1DD862DC001DF7F1 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = RF4LJPC23U;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 56A81B261DD862DC001DF7F1 /* Build configuration list for PBXProject "tflapp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				de,
+				es,
+				fr,
+				pt,
+			);
+			mainGroup = 56A81B221DD862DC001DF7F1;
+			productRefGroup = 56A81B2C1DD862DC001DF7F1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				56A81B2A1DD862DC001DF7F1 /* tflapp */,
+				5657D3651DE387E6004E4CD0 /* tflApp Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5657D3641DE387E6004E4CD0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56A81B291DD862DC001DF7F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				566EF7D11DDB5685006162D7 /* TFLBusStops.sqlite in Resources */,
+				56A81B3C1DD862DC001DF7F1 /* LaunchScreen.storyboard in Resources */,
+				56D70D351DD9A7A6004CA293 /* Localizable.strings in Resources */,
+				56A81B391DD862DC001DF7F1 /* Assets.xcassets in Resources */,
+				56A81B341DD862DC001DF7F1 /* Main.storyboard in Resources */,
+				56D70D341DD9A7A6004CA293 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4B310D95D34D5BED18455079 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-tflApp Tests/Pods-tflApp Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		564EC6F11DDFE180008CFD11 /* Inject API Keys */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Inject API Keys";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nif [ -e \".env\" ]\nthen\nsource .env\nfind . -name TLFRequestManager.swift -exec sed -i \"\" \"s/PASTE_YOUR_APPLICATION_ID_HERE/$TFLApplicationID/g\" {} \\;\nfind . -name TLFRequestManager.swift -exec sed -i \"\" \"s/PASTE_YOUR_APPLICATION_KEY_HERE/$TFLApplicationKey/g\" {} \\;\nfind . -name Info.plist -exec sed -i \"\" \"s/PASTE_YOUR_FABRIC_API_KEY_HERE/$TFLFABBRICSAPIKEY/g\" {} \\;\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		564EC6F21DDFE205008CFD11 /* Remove API Keys */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Remove API Keys";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -e \".env\" ]\nthen\nsource .env\nfind . -name TLFRequestManager.swift -exec sed -i \"\" \"s/$TFLApplicationID/PASTE_YOUR_APPLICATION_ID_HERE/g\" {} \\;\nfind . -name TLFRequestManager.swift -exec sed -i \"\" \"s/$TFLApplicationKey/PASTE_YOUR_APPLICATION_KEY_HERE/g\" {} \\;\nfind . -name Info.plist -exec sed -i \"\" \"s/$TFLFABBRICSAPIKEY/PASTE_YOUR_FABRIC_API_KEY_HERE/g\" {} \\;\nfi";
+		};
+		564EC6F61DE0DA8D008CFD11 /* Fabrics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Fabrics;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -e \".env\" ]\nthen\nsource .env\n./Fabric.framework/run $TFLFABBRICSAPIKEY $TFLFABRICSBUILDSECRET\nfi";
+		};
+		5CCA668F6EB7B436258B28AA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-tflapp/Pods-tflapp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC828CD492670DF6F91697A8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-tflapp/Pods-tflapp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5ACE26E6374F6550AC45E8A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-tflApp Tests/Pods-tflApp Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA12D93F7484B0C6E06F9920 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E665C226CB022DA33D91ED39 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5657D3621DE387E6004E4CD0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5685ADC41DEF8DDC009FD6A5 /* TFLBusPredictionViewCellSpecs.swift in Sources */,
+				5641F6EE1F19F68B00A3A9D2 /* TFLRequestManagerSpecs.swift in Sources */,
+				5657D3711DE38ADF004E4CD0 /* TFLBusPredictionSpecs.swift in Sources */,
+				56C828901DE8E9FA00E52086 /* TFLChangeSetProtocol.swift in Sources */,
+				56D0AF351E147C6F00F466C4 /* TFLAnimationLabelSpecs.swift in Sources */,
+				561FD9021F1FB1F50012466A /* TFLClientSpecs.swift in Sources */,
+				56C828941DE9CDB900E52086 /* TFLTransitionableSpecs.swift in Sources */,
+				56B86EAD1DE4FED000A89D16 /* TFLBusStopArrivalsViewModelSpecs.swift in Sources */,
+				5657D3731DE3A00A004E4CD0 /* TFLCDBusStopSpecs.swift in Sources */,
+				5657D3751DE3B480004E4CD0 /* TFLNotificationObserverSpec.swift in Sources */,
+				5646C4031DE62389006EA956 /* TFLBusStationArrivalsCellSpecs.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56A81B271DD862DC001DF7F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56D70D141DD9A25F004CA293 /* TFLLocationManager.swift in Sources */,
+				56C6A3471DF44F6A00067D06 /* TFLMapViewAnnotation.swift in Sources */,
+				565A1FC51DD8F331003CE960 /* TLFClient.swift in Sources */,
+				564EC7061DE1917D008CFD11 /* TFLBusPredictionViewCell.swift in Sources */,
+				56823EAA1DDDA4CC00E79B1A /* TFLNoStationsView.swift in Sources */,
+				564EC6FD1DE10272008CFD11 /* Crashlytics.swift in Sources */,
+				565A1FC31DD8F317003CE960 /* TLFRequestManager.swift in Sources */,
+				56A81B2F1DD862DC001DF7F1 /* TFLAppDelegate.swift in Sources */,
+				56C828921DE9859D00E52086 /* TFLTransitionable.swift in Sources */,
+				564EC7081DE1917D008CFD11 /* TFLBusStopArrivalsInfo.swift in Sources */,
+				56823EAE1DDDA5B300E79B1A /* TFLNoGPSEnabledView.swift in Sources */,
+				56C828961DEA396400E52086 /* TFLCollectionFlowLayout.swift in Sources */,
+				566EF7C71DDA3A2B006162D7 /* TFLBusPrediction.swift in Sources */,
+				56C2D6DC1DE5D6B000F43628 /* TFLBusStopArrivalsViewModel.swift in Sources */,
+				566EF7CC1DDB0851006162D7 /* TFLCDBusStop+CoreDataClass.swift in Sources */,
+				564EC6F51DE0A2A0008CFD11 /* TFLButton.swift in Sources */,
+				56823EA61DDDA39600E79B1A /* TFLLoadLocationView.swift in Sources */,
+				562DBF5A1E05B6780028F3CD /* TFLSnapHandler.swift in Sources */,
+				56D0AF331E141D2C00F466C4 /* TFLAnimiatedLabel.swift in Sources */,
+				565A1FC81DD8F6E6003CE960 /* TFLCoreDataStack.swift in Sources */,
+				565A1FD21DD8FB2A003CE960 /* Model.xcdatamodeld in Sources */,
+				56823EAC1DDDA54100E79B1A /* TFLLoadArrivalTimesView.swift in Sources */,
+				565A1FCF1DD8F93F003CE960 /* TFLNotificationObserver.swift in Sources */,
+				566EF7D31DDB71CE006162D7 /* TFLBusStopStack.swift in Sources */,
+				566EF7E21DDC59ED006162D7 /* UIFont.swift in Sources */,
+				56823EA81DDDA45600E79B1A /* TFLLoadNearbyStationsView.swift in Sources */,
+				5692B5031DF2E4EB00C56A3C /* TFLMapViewController.swift in Sources */,
+				564EC70A1DE1917D008CFD11 /* TFLNearbyBusStationsController.swift in Sources */,
+				5692B5001DF2E26300C56A3C /* TFLSlideContainerController.swift in Sources */,
+				566EF7D71DDC4D14006162D7 /* TFLRootViewController.swift in Sources */,
+				564EC7051DE1917D008CFD11 /* TFLBusPredictionView.swift in Sources */,
+				566EF7CD1DDB0851006162D7 /* TFLCDBusStop+CoreDataProperties.swift in Sources */,
+				56AB9FAC1DE8D95A00A9042A /* TFLChangeSetProtocol.swift in Sources */,
+				564EC7071DE1917D008CFD11 /* TFLBusStationArrivalsCell.swift in Sources */,
+				5692B5071DF2F15F00C56A3C /* TFLNearbyBackgroundController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5657D36C1DE387E6004E4CD0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 56A81B2A1DD862DC001DF7F1 /* tflapp */;
+			targetProxy = 5657D36B1DE387E6004E4CD0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		56A81B321DD862DC001DF7F1 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				56A81B331DD862DC001DF7F1 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		56A81B3A1DD862DC001DF7F1 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				56A81B3B1DD862DC001DF7F1 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		56D70D301DD9A7A6004CA293 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				56D70D311DD9A7A6004CA293 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		56D70D321DD9A7A6004CA293 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				56D70D331DD9A7A6004CA293 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5657D36D1DE387E6004E4CD0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEB656AE4FFADE13DD37A13F /* Pods-tflApp Tests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
+				DEVELOPMENT_TEAM = RF4LJPC23U;
+				INFOPLIST_FILE = "tflApp Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.samedialabs.tflApp-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/London Bus.app/London Bus";
+			};
+			name = Debug;
+		};
+		5657D36E1DE387E6004E4CD0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A89F45A39DFA1D633B11475 /* Pods-tflApp Tests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
+				DEVELOPMENT_TEAM = RF4LJPC23U;
+				INFOPLIST_FILE = "tflApp Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.samedialabs.tflApp-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/London Bus.app/London Bus";
+			};
+			name = Release;
+		};
+		56A81B3E1DD862DC001DF7F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES_AGGRESSIVE;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "tflapp-dev.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		56A81B3F1DD862DC001DF7F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES_AGGRESSIVE;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "tflapp-dev.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 4.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		56A81B411DD862DC001DF7F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 29D20D8BDB3378F1D7CC9DAE /* Pods-tflapp.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = tflapp/tflapp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = RF4LJPC23U;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/tflapp/Frameworks",
+				);
+				INFOPLIST_FILE = tflapp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.samedialabs.tflapp;
+				PRODUCT_NAME = "London Bus";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		56A81B421DD862DC001DF7F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09B8C602EFB434FF269AB5A9 /* Pods-tflapp.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = tflapp/tflapp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = RF4LJPC23U;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/tflapp/Frameworks",
+				);
+				INFOPLIST_FILE = tflapp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.samedialabs.tflapp;
+				PRODUCT_NAME = "London Bus";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5657D36F1DE387E6004E4CD0 /* Build configuration list for PBXNativeTarget "tflApp Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5657D36D1DE387E6004E4CD0 /* Debug */,
+				5657D36E1DE387E6004E4CD0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56A81B261DD862DC001DF7F1 /* Build configuration list for PBXProject "tflapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56A81B3E1DD862DC001DF7F1 /* Debug */,
+				56A81B3F1DD862DC001DF7F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56A81B401DD862DC001DF7F1 /* Build configuration list for PBXNativeTarget "tflapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56A81B411DD862DC001DF7F1 /* Debug */,
+				56A81B421DD862DC001DF7F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		565A1FD01DD8FB2A003CE960 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				565A1FD11DD8FB2A003CE960 /* Model.xcdatamodel */,
+			);
+			currentVersion = 565A1FD11DD8FB2A003CE960 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 56A81B231DD862DC001DF7F1 /* Project object */;
+}
