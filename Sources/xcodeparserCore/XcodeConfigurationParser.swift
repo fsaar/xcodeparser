@@ -40,16 +40,16 @@ private extension XcodeConfigurationParser {
                     let e = XcodeSimpleExpression(value: value, comment: comment)
                     resultsDict[key] = e
                 }
-                else {
-                    switch (string[currentIndex]) {
+                else if let firstChar = remainderAfterKey.first {
+                    switch (firstChar) {
                     case "(":
-                        if let expression = try? ExpressionExtractor(with: string).parse(),let config = expression {
+                        if let expression = try? ExpressionExtractor(with: remainderAfterKey).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
                             resultsDict[key] = XcodeListExpression(value:extractList(from: config.expression),comment:comment)
                         }
                         
                     case "{":
-                        if let expression = try? ExpressionExtractor(with: string).parse(),let config = expression {
+                        if let expression = try? ExpressionExtractor(with: remainderAfterKey).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
                             let innerExpression = String(config.expression.dropFirst().dropLast())
                             resultsDict[key] = XcodeDictionaryExpression(value: try dictionary(from: innerExpression),comment:comment)
