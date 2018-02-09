@@ -249,7 +249,9 @@ class XcodeConfigurationParserTests : XCTestCase {
                                     };
                                     objectVersion = 46;
                                     objects = {
-                                        2C659326B6D6A9829EDDAFC3 = {isa = PBXBuildFile; fileRef = E391093442B4E54575D4146B; };
+                                        
+                                        2C659326B6D6A9829EDDAFC3 = {isa = PBXBuildFile; fileRef = E391093442B4E54575D4146B /* Pods_tflApp_Tests.framework */; };
+                                        412222F26B670B4DE4DA2909 /* libPods-tflapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A103EB36E89F05E8B43D63BE /* libPods-tflapp.a */; };
                                         
                                     }
                                 }
