@@ -51,14 +51,13 @@ public class ExpressionStack {
 
 fileprivate extension ExpressionStack {
     func match(stack : [String]) -> [String] {
-        guard stack.count > 1 else {
+        let suffix = stack.suffix(2)
+        guard suffix.count == 2,let open = suffix.first,let close = suffix.last else {
             return stack
         }
-        let open = stack[stack.count-2]
-        let close = stack[stack.count-1]
         let pair = ExpressionStackPair(open: open, close: close)
         if pairs.contains(pair) {
-            return Array(stack.dropLast().dropLast())
+            return Array(stack.prefix(stack.count-2))
         }
         return  stack
     }
