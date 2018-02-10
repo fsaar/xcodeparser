@@ -7,6 +7,8 @@
 import Foundation
 
 enum Regex : String {
+    
+    case comment = "^(\\s*\\/\\*([\":\\s\\w\\d-\\.+-]*\\*\\/\\s*))*"
     case keyCommentEqualComment = "^([{(]?\\s*([\":\\w\\d]+)\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-]*)\\*\\/)?\\s*=\\s*).*$"
     case value = "^\\s*(([\":\\w\\d]+)\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-]*)\\*\\/)?\\s*;\\s*)"
     case listValue = "[{(]?\\s*((\"\\$\\([:\\w\\d\\/]+\\)[:\\w\\d\\/]*\")|(\"[:\\w\\d\\/]+\")|([:\\w\\d\\/]+))\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-]*)\\*\\/)?\\s*[)},]?"
@@ -18,6 +20,21 @@ extension String {
         let distance = self.distance(from: range.lowerBound, to: range.upperBound)
         let newIndex = self.index(index, offsetBy: distance)
         return newIndex
+    }
+    
+    func comment() -> (comment:String,range:Range<String.Index>)?  {
+        guard let dictRegex = try? NSRegularExpression(pattern: Regex.comment.rawValue, options: [.anchorsMatchLines]) else {
+            return nil
+        }
+        let matches = dictRegex.matches(in: self, options: [], range: NSMakeRange(0, count))
+        guard let result = matches.first,result.numberOfRanges > 1 else {
+            return nil
+        }
+        guard let range = Range(result.range(at: 0),in:self) else {
+            return nil
+        }
+        let value = String(self[range])
+        return (value,range)
     }
     
     func value() -> (value:String,range:Range<String.Index>)?  {

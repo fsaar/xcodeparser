@@ -32,7 +32,11 @@ private extension XcodeConfigurationParser {
         var currentIndex = string.startIndex
         while currentIndex < string.endIndex {
             let remainder = String(string[currentIndex..<string.endIndex])
-            if let (key,comment,keyRange) = remainder.keyValueStart() {
+            if let (_,commentRange) = remainder.comment() {
+                currentIndex = string.index(index: currentIndex,after: commentRange)
+            }
+            
+            if let (key,comment,keyRange) = String(string[currentIndex..<string.endIndex]).keyValueStart() {
                 currentIndex = string.index(index: currentIndex,after: keyRange)
                 let remainderAfterKey = String(string[currentIndex..<string.endIndex])
                 if let (value,valueRange) = remainderAfterKey.value() {

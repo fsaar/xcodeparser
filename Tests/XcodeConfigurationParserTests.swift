@@ -85,6 +85,23 @@ class XcodeConfigurationParserTests : XCTestCase {
        
     }
     
+    func testThatItShouldReadAKeyValueConfigurationWithAComment() {
+        let configString =  """
+                               
+                                {
+                                /* Begin PBXAggregateTarget section */
+                                     classes = {};
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse()
+        let key = config.keys.first!
+        let dict = config["classes"] as! XcodeDictionaryExpression
+        XCTAssertEqual(key,"classes")
+        XCTAssertEqual(dict.value.keys.isEmpty, true)
+        
+    }
+    
     func testThatItShouldReadAKeyValueConfigurationWithMultipleEntries() {
         let configString =  """
                                 {
@@ -244,16 +261,34 @@ class XcodeConfigurationParserTests : XCTestCase {
         let configString = """
                                 // !$*UTF8*$!
                                 {
-                                    archiveVersion = 1;
-                                    classes = {
-                                    };
-                                    objectVersion = 46;
-                                    objects = {
-                                        
-                                        2C659326B6D6A9829EDDAFC3 = {isa = PBXBuildFile; fileRef = E391093442B4E54575D4146B /* Pods_tflApp_Tests.framework */; };
-                                        412222F26B670B4DE4DA2909 /* libPods-tflapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A103EB36E89F05E8B43D63BE /* libPods-tflapp.a */; };
-                                        
-                                    }
+                                        archiveVersion = 1;
+                                        classes = {
+                                        };
+                                        objectVersion = 46;
+                                        objects = {
+
+                                /* Begin PBXAggregateTarget section */
+                                                "xcodeparser::xcodeparserPackageTests::ProductTarget" /* xcodeparserPackageTests */ = {
+                                                        isa = PBXAggregateTarget;
+                                                        buildConfigurationList = OBJ_50 /* Build configuration list for PBXAggregateTarget "xcodeparserPackageTests" */;
+                                                        buildPhases = (
+                                                        );
+                                                        dependencies = (
+                                                                OBJ_53 /* PBXTargetDependency */,
+                                                        );
+                                                        name = xcodeparserPackageTests;
+                                                        productName = xcodeparserPackageTests;
+                                                };
+                                /* End PBXAggregateTarget section */
+
+                                /* Begin PBXBuildFile section */
+                                                560024B02025F23F00104EF3 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560024AE2025F22700104EF3 /* String + Extension.swift */; };
+                                                5616B5A3202C92E7009AC676 /* XcodeExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5616B5A1202C92CC009AC676 /* XcodeExpression.swift */; };
+                                                56547EE0201F615B00F52AF3 /* ExpressionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56547EDE201F5A7B00F52AF3 /* ExpressionExtractor.swift */; };
+                                                56547EE2201F646200F52AF3 /* ExpressionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56547EE1201F646200F52AF3 /* ExpressionStack.swift */; };
+                                                56547EE4201F724600F52AF3 /* ExpressionStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56547EE3201F724600F52AF3 /* ExpressionStackTests.swift */; }
+                                            
+                                        }
                                 }
                             """
         let parser = try! XcodeConfigurationParser(configuration:configString)
