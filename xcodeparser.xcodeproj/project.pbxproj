@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		560024B02025F23F00104EF3 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560024AE2025F22700104EF3 /* String + Extension.swift */; };
 		5616B5A3202C92E7009AC676 /* XcodeExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5616B5A1202C92CC009AC676 /* XcodeExpression.swift */; };
+		5616B5A7202D6A77009AC676 /* tflproject.sample in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5616B5A5202D6A13009AC676 /* tflproject.sample */; };
 		56547EE0201F615B00F52AF3 /* ExpressionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56547EDE201F5A7B00F52AF3 /* ExpressionExtractor.swift */; };
 		56547EE2201F646200F52AF3 /* ExpressionStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56547EE1201F646200F52AF3 /* ExpressionStack.swift */; };
 		56547EE4201F724600F52AF3 /* ExpressionStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56547EE3201F724600F52AF3 /* ExpressionStackTests.swift */; };
@@ -59,9 +60,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5616B5A6202D6A6B009AC676 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				5616B5A7202D6A77009AC676 /* tflproject.sample in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		560024AE2025F22700104EF3 /* String + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extension.swift"; sourceTree = "<group>"; };
 		5616B5A1202C92CC009AC676 /* XcodeExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeExpression.swift; sourceTree = "<group>"; };
+		5616B5A5202D6A13009AC676 /* tflproject.sample */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tflproject.sample; sourceTree = "<group>"; };
 		56547EDE201F5A7B00F52AF3 /* ExpressionExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionExtractor.swift; sourceTree = "<group>"; };
 		56547EE1201F646200F52AF3 /* ExpressionStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionStack.swift; sourceTree = "<group>"; };
 		56547EE3201F724600F52AF3 /* ExpressionStackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionStackTests.swift; sourceTree = "<group>"; };
@@ -115,6 +130,7 @@
 		OBJ_12 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				5616B5A5202D6A13009AC676 /* tflproject.sample */,
 				OBJ_13 /* XcodeConfigurationParserTests.swift */,
 				56547EE3201F724600F52AF3 /* ExpressionStackTests.swift */,
 				56547EE5201F7A3400F52AF3 /* ExpressionExtractorTests.swift */,
@@ -221,6 +237,7 @@
 			buildPhases = (
 				OBJ_28 /* Sources */,
 				OBJ_30 /* Frameworks */,
+				5616B5A6202D6A6B009AC676 /* CopyFiles */,
 			);
 			buildRules = (
 			);
