@@ -28,6 +28,8 @@ public class XcodeConfigurationParser {
 
 private extension XcodeConfigurationParser {
     func dictionary(from string : String) throws  -> [String : XcodeExpression] {
+        let queue = OperationQueue()
+        let syncGroup = DispatchGroup()
         var resultsDict : [String : XcodeExpression] = [:]
         var currentIndex = string.startIndex
         while currentIndex < string.endIndex {
@@ -49,14 +51,25 @@ private extension XcodeConfigurationParser {
                     case "(":
                         if let expression = try? ExpressionExtractor(with: remainderAfterKey).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
-                            resultsDict[key] = .array(expression:XcodeListExpression(value:extractList(from: config.expression),comment:comment))
+                            syncGroup.enter()
+                            queue.addOperation {
+                                resultsDict[key] = .array(expression:XcodeListExpression(value:self.extractList(from: config.expression),comment:comment))
+                                syncGroup.leave()
+                            }
                         }
                         
                     case "{":
                         if let expression = try? ExpressionExtractor(with: remainderAfterKey).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
-                            let innerExpression = String(config.expression.dropFirst().dropLast())
-                            resultsDict[key] = .dictionary(expression:XcodeDictionaryExpression(value: try dictionary(from: innerExpression),comment:comment))
+                            syncGroup.enter()
+                            queue.addOperation {
+                                let innerExpression = String(config.expression.dropFirst().dropLast())
+                                if let expression  = try? self.dictionary(from: innerExpression) {
+                                    resultsDict[key] = .dictionary(expression:XcodeDictionaryExpression(value: expression,comment:comment))
+                                }
+                                syncGroup.leave()
+                            }
+                            
                         }
                     default:
                         break
@@ -69,7 +82,7 @@ private extension XcodeConfigurationParser {
                 currentIndex = string.index(currentIndex, offsetBy: 1, limitedBy: string.endIndex) ?? string.endIndex
             }
         }
-        
+        syncGroup.wait()
         return resultsDict
     }
     
