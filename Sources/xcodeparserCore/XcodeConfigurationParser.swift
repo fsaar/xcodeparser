@@ -20,15 +20,15 @@ public class XcodeConfigurationParser {
         self.configuration = String(parsedConfiguration.dropFirst().dropLast())
     }
     
-    public func parse() throws  -> [String : Any] {
+    public func parse() throws  -> [String : XcodeExpression] {
         let resultsDict = try dictionary(from:self.configuration)
         return resultsDict
     }
 }
 
 private extension XcodeConfigurationParser {
-    func dictionary(from string : String) throws  -> [String : Any] {
-        var resultsDict : [String : Any] = [:]
+    func dictionary(from string : String) throws  -> [String : XcodeExpression] {
+        var resultsDict : [String : XcodeExpression] = [:]
         var currentIndex = string.startIndex
         while currentIndex < string.endIndex {
             let remainder = String(string[currentIndex..<string.endIndex])
@@ -42,31 +42,31 @@ private extension XcodeConfigurationParser {
                 if let (value,valueRange) = remainderAfterKey.value() {
                     currentIndex = string.index(index: currentIndex,after: valueRange)
                     let e = XcodeSimpleExpression(value: value, comment: comment)
-                    resultsDict[key] = e
+                    resultsDict[key] = .assignment(expression: e)
                 }
                 else if let firstChar = remainderAfterKey.first {
                     switch (firstChar) {
                     case "(":
                         if let expression = try? ExpressionExtractor(with: remainderAfterKey).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
-                            resultsDict[key] = XcodeListExpression(value:extractList(from: config.expression),comment:comment)
+                            resultsDict[key] = .array(expression:XcodeListExpression(value:extractList(from: config.expression),comment:comment))
                         }
                         
                     case "{":
                         if let expression = try? ExpressionExtractor(with: remainderAfterKey).parse(),let config = expression {
                             currentIndex = string.index(index: currentIndex,after: config.range)
                             let innerExpression = String(config.expression.dropFirst().dropLast())
-                            resultsDict[key] = XcodeDictionaryExpression(value: try dictionary(from: innerExpression),comment:comment)
+                            resultsDict[key] = .dictionary(expression:XcodeDictionaryExpression(value: try dictionary(from: innerExpression),comment:comment))
                         }
                     default:
                         break
                     }
-                    currentIndex = string.index(after: currentIndex)
+                    currentIndex =  string.index(currentIndex, offsetBy: 1, limitedBy: string.endIndex) ?? string.endIndex
                 }
             }
             else
             {
-                currentIndex = string.index(after: currentIndex)
+                currentIndex = string.index(currentIndex, offsetBy: 1, limitedBy: string.endIndex) ?? string.endIndex
             }
         }
         
