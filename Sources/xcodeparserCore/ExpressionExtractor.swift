@@ -30,7 +30,7 @@ public class ExpressionExtractor {
         while currentIndex < content.endIndex {
             let character = String(content[currentIndex])
             if tupleSet.contains(character)  {
-                stack.push(expression: character)
+                _ = stack.push(expression: character,index:currentIndex)
             }
             switch (state,stack.isEmpty) {
             case (.started(let startIndex),true):

@@ -32,16 +32,35 @@ public struct ExpressionStackPair : Hashable {
     }
 }
 
+public struct Expression  : Hashable{
+    let index : String.Index
+    let string : String
+    
+    init(string : String, index : String.Index) {
+        self.string = string
+        self.index = index
+    }
+    
+    public static func ==(lhs : Expression,rhs : Expression) -> Bool {
+        return lhs.string == rhs.string
+    }
+    public var hashValue: Int {
+        return string.hashValue
+    }
+}
+
 public class ExpressionStack {
  
-    private var stack : [String] = []
+    private var stack : [Expression] = []
     private var pairs : Set<ExpressionStackPair> = []
     public init(pairs: Set<ExpressionStackPair>) {
         self.pairs = pairs
     }
     
-    public func push(expression : String) {
-        stack =  match(stack:stack + [expression])
+    public  func push(expression : String,index : String.Index) -> ClosedRange<String.Index>? {
+        var range : ClosedRange<String.Index>? = nil
+        (stack,range) =  match(stack:stack + [Expression(string: expression, index: index) ])
+        return range
     }
     
     public var isEmpty : Bool {
@@ -50,15 +69,16 @@ public class ExpressionStack {
 }
 
 fileprivate extension ExpressionStack {
-    func match(stack : [String]) -> [String] {
+    func match(stack : [Expression]) -> (stack:[Expression],range:ClosedRange<String.Index>?) {
         let suffix = stack.suffix(2)
         guard suffix.count == 2,let open = suffix.first,let close = suffix.last else {
-            return stack
+            return (stack,nil)
         }
-        let pair = ExpressionStackPair(open: open, close: close)
+        let pair = ExpressionStackPair(open: open.string, close: close.string)
         if pairs.contains(pair) {
-            return Array(stack.prefix(stack.count-2))
+            let range = open.index...close.index
+            return (Array(stack.prefix(stack.count-2)),range)
         }
-        return  stack
+        return  (stack,nil)
     }
 }
