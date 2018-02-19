@@ -59,23 +59,19 @@ private extension XcodeConfigurationParser {
                     let innerRange = string.innerRange(of: range)
                     let expression = string[innerRange]
                     currentIndex = string.index(after:range.upperBound)
-                    switch (firstChar) {
-                    case "(":
-                        syncGroup.enter()
-                        queue.addOperation {
+                    syncGroup.enter()
+                    queue.addOperation {
+                        switch (firstChar) {
+                        case "(":
                             resultsDict[key] = .array(expression:XcodeListExpression(value:self.extractList(from: expression,with:innerRange.lowerBound),comment:comment))
-                            syncGroup.leave()
-                        }
-                    case "{":
-                        syncGroup.enter()
-                        queue.addOperation {
+                        case "{":
                             if let dictionary  = try? self.dictionary(from: expression,with: innerRange.lowerBound) {
                                 resultsDict[key] = .dictionary(expression:XcodeDictionaryExpression(value: dictionary,comment:comment))
                             }
-                            syncGroup.leave()
+                        default:
+                            break
                         }
-                    default:
-                        break
+                        syncGroup.leave()
                     }
                     currentIndex =  string.index(currentIndex, offsetBy: 1, limitedBy: string.endIndex) ?? string.endIndex
                 }
