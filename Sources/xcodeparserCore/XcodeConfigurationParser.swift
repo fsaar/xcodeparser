@@ -13,28 +13,33 @@ public class XcodeConfigurationParser {
     }
     
     let configuration : String
+    let rangeDict : [String.Index:ClosedRange<String.Index>]
     public init(configuration : String) throws {
-        guard let parsedConfiguration = try? ExpressionExtractor(with: configuration).parse()?.expression ?? "",!parsedConfiguration.isEmpty else {
+        guard let dict = try? ExpressionExtractor(with: configuration).parse() ,!dict.keys.isEmpty else {
             throw Result.invalid
         }
-        self.configuration = String(parsedConfiguration.dropFirst().dropLast())
+        self.configuration = configuration
+    
+        rangeDict = dict
     }
     
     public func parse() throws  -> [String : XcodeExpression] {
-        let resultsDict = try dictionary(from:self.configuration)
+        let range = rangeDict.values.sorted(by: { $0.lowerBound < $1.lowerBound })[0]
+        let innerRange = configuration[range].innerRange(of: range)
+        let resultsDict = try dictionary(from:configuration[innerRange],with:innerRange.lowerBound)
         return resultsDict
     }
 }
 
 private extension XcodeConfigurationParser {
-    func dictionary(from string : String) throws  -> [String : XcodeExpression] {
+    func dictionary(from string : Substring,with startIndex : String.Index) throws  -> [String : XcodeExpression] {
         let queue = OperationQueue()
         let syncGroup = DispatchGroup()
         var resultsDict : [String : XcodeExpression] = [:]
-        var currentIndex = string.startIndex
+        var currentIndex = startIndex
         while currentIndex < string.endIndex {
-            let remainder = String(string[currentIndex..<string.endIndex])
-            if let (_,commentRange) = remainder.comment() {
+            let remainder = string[currentIndex..<string.endIndex]
+            if let (_,commentRange) = String(remainder).comment() {
                 currentIndex = string.index(index: currentIndex,after: commentRange)
             }
             
@@ -50,30 +55,24 @@ private extension XcodeConfigurationParser {
                         syncGroup.leave()
                     }
                 }
-                else if let firstChar = remainderAfterKey.first {
+                else if let range = rangeDict[currentIndex],let firstChar = remainderAfterKey.first  {
+                    let innerRange = string.innerRange(of: range)
+                    let expression = string[innerRange]
+                    currentIndex = string.index(after:range.upperBound)
                     switch (firstChar) {
                     case "(":
-                        if let expression = try? ExpressionExtractor(with: remainderAfterKey).parse(),let config = expression {
-                            currentIndex = string.index(index: currentIndex,after: config.range)
-                            syncGroup.enter()
-                            queue.addOperation {
-                                resultsDict[key] = .array(expression:XcodeListExpression(value:self.extractList(from: config.expression),comment:comment))
-                                syncGroup.leave()
-                            }
+                        syncGroup.enter()
+                        queue.addOperation {
+                            resultsDict[key] = .array(expression:XcodeListExpression(value:self.extractList(from: expression,with:innerRange.lowerBound),comment:comment))
+                            syncGroup.leave()
                         }
-                        
                     case "{":
-                        if let expression = try? ExpressionExtractor(with: remainderAfterKey).parse(),let config = expression {
-                            currentIndex = string.index(index: currentIndex,after: config.range)
-                            syncGroup.enter()
-                            queue.addOperation {
-                                let innerExpression = String(config.expression.dropFirst().dropLast())
-                                if let expression  = try? self.dictionary(from: innerExpression) {
-                                    resultsDict[key] = .dictionary(expression:XcodeDictionaryExpression(value: expression,comment:comment))
-                                }
-                                syncGroup.leave()
+                        syncGroup.enter()
+                        queue.addOperation {
+                            if let dictionary  = try? self.dictionary(from: expression,with: innerRange.lowerBound) {
+                                resultsDict[key] = .dictionary(expression:XcodeDictionaryExpression(value: dictionary,comment:comment))
                             }
-                            
+                            syncGroup.leave()
                         }
                     default:
                         break
@@ -90,9 +89,9 @@ private extension XcodeConfigurationParser {
         return resultsDict
     }
     
-    func extractList(from string: String) -> [XcodeSimpleExpression] {
+    func extractList(from string: Substring,with startIndex : String.Index) -> [XcodeSimpleExpression] {
         var list : [XcodeSimpleExpression] = []
-        var index = string.startIndex
+        var index = startIndex
         while let tuple = String(string[index..<string.endIndex]).listValue() {
             let expression = XcodeSimpleExpression(value: tuple.value, comment: tuple.comment)
             list += [expression]

@@ -19,37 +19,26 @@ public class ExpressionExtractor {
     private var state = State.searching
     public let content : String
     private let tupleSet = Set([ExpressionStackPair(open: "{", close: "}"),ExpressionStackPair(open: "(", close: ")")])
-    private lazy var stack = ExpressionStack(pairs: self.tupleSet)
-
+    
     public  init(with content : String) {
         self.content = content
     }
     
-    public func parse() throws -> (expression:String,range:Range<String.Index>)? {
+    public func parse() throws -> [String.Index:ClosedRange<String.Index>] {
+        var rangeDict : [String.Index:ClosedRange<String.Index>] = [:]
+        let stack = ExpressionStack(pairs: self.tupleSet)
         var currentIndex = content.startIndex
         while currentIndex < content.endIndex {
             let character = String(content[currentIndex])
-            if tupleSet.contains(character)  {
-                _ = stack.push(expression: character,index:currentIndex)
+            if tupleSet.contains(character), let range = stack.push(expression: character,index:currentIndex) {
+                rangeDict[range.lowerBound] = range
             }
-            switch (state,stack.isEmpty) {
-            case (.started(let startIndex),true):
-                self.state = .end
-                let endIndex = self.content.index(after:currentIndex)
-                let range = startIndex..<endIndex
-                let expression = String(self.content[range])
-                return (expression,range)
-            case (.searching,false):
-                self.state = .started(currentIndex)
-            default:
-                break
-            }
-           
-            currentIndex = content.index(after: currentIndex)
+            currentIndex = content.index(currentIndex, offsetBy: 1,limitedBy:content.endIndex) ?? content.endIndex
         }
-        if case .started = state {
+        if !stack.isEmpty {
             throw ErrorType.invalidSyntax
         }
-        return nil
+        return rangeDict
     }
 }
+

@@ -14,13 +14,26 @@ enum Regex : String {
     case listValue = "[{(]?\\s*((\"\\$\\([:\\w\\d\\/]+\\)[:\\w\\d\\/]*\")|(\"[:\\w\\d\\/]+\")|([:\\w\\d\\/]+))\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*[)},]?"
 }
 
-extension String {
-    
+
+extension Substring {
     func index(index : String.Index, after range: Range<String.Index>) -> String.Index {
         let distance = self.distance(from: range.lowerBound, to: range.upperBound)
         let newIndex = self.index(index, offsetBy: distance)
         return newIndex
     }
+    
+    func innerRange(of range : ClosedRange<String.Index>) -> ClosedRange<String.Index> {
+        guard self.distance(from: range.lowerBound, to: range.upperBound) > 1 else {
+            return range
+        }
+        let lowerBound = self.index(after: range.lowerBound)
+        let upperBound = self.index(before: range.upperBound)
+        return lowerBound...upperBound
+    }
+}
+extension String {
+    
+    
     
     func comment() -> (comment:String,range:Range<String.Index>)?  {
         guard let dictRegex = try? NSRegularExpression(pattern: Regex.comment.rawValue, options: [.anchorsMatchLines]) else {
