@@ -41,6 +41,7 @@ private extension XcodeConfigurationParser {
             let remainder = string[currentIndex..<string.endIndex]
             if let (_,commentRange) = String(remainder).comment() {
                 currentIndex = string.index(index: currentIndex,after: commentRange)
+                continue
             }
             
             if let (key,comment,keyRange) = String(string[currentIndex..<string.endIndex]).keyValueStart() {

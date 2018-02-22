@@ -32,23 +32,55 @@ extension Substring {
     }
 }
 extension String {
-    
-    
-    
-    func comment() -> (comment:String,range:Range<String.Index>)?  {
-        guard let dictRegex = try? NSRegularExpression(pattern: Regex.comment.rawValue, options: [.anchorsMatchLines]) else {
-            return nil
-        }
-        let matches = dictRegex.matches(in: self, options: [], range: NSMakeRange(0, count))
-        guard let result = matches.first,result.numberOfRanges > 1 else {
-            return nil
-        }
-        guard let range = Range(result.range(at: 0),in:self) else {
-            return nil
-        }
-        let value = String(self[range])
-        return (value,range)
+    enum Comment {
+        case scan
+        case end
     }
+    
+    func skip(_ characterSet : CharacterSet,at index: String.Index) -> String.Index {
+        var currentIndex = index
+        while currentIndex < self.endIndex, let character = self[currentIndex].unicodeScalars.first,characterSet.contains(character) {
+            currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
+        }
+        return currentIndex
+    }
+    
+    func comment() -> (comment:String?,range:Range<String.Index>)? {
+        var state : Comment = .scan
+        var currentIndex = skip(.whitespacesAndNewlines,at: self.startIndex)
+        if !self[currentIndex...].hasPrefix("/*") {
+            return currentIndex == self.startIndex ? nil : (nil,self.startIndex..<currentIndex)
+        }
+        currentIndex =  self.index(currentIndex, offsetBy: 2, limitedBy: self.endIndex) ?? self.endIndex
+        let rangeStart = currentIndex
+        while currentIndex < self.endIndex {
+            if let character = self[currentIndex].unicodeScalars.first, CharacterSet.newlines.contains(character) {
+                return nil
+            }
+            switch state {
+            case .scan:
+                if case "*" = self[currentIndex] {
+                    state = .end
+                }
+            case .end:
+                if case "/" = self[currentIndex] {
+                    let rangeEnd = self.index(currentIndex, offsetBy: -1)
+                    let comment = String(self[rangeStart..<rangeEnd])
+                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
+                    currentIndex = skip(.whitespacesAndNewlines,at: currentIndex)
+                    return (comment,self.startIndex..<currentIndex)
+                }
+                else
+                {
+                    state = .scan
+                }
+            }
+            currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
+        }
+        return nil
+    }
+    
+    
     
     func value() -> (value:String,range:Range<String.Index>)?  {
         guard let dictRegex = try? NSRegularExpression(pattern: Regex.value.rawValue, options: [.anchorsMatchLines]) else {

@@ -485,5 +485,13 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertNotNil(objects["56D70D2F1DD9A7A6004CA293"])
         XCTAssertNotNil(objects["E391093442B4E54575D4146B"])
     }
-
+    
+    func testThatItShouldReadTFLProjectFileCorrectly2() {
+        let url = Bundle(for: type(of:self)) .url(forResource: "aimia", withExtension: "sample")
+        let project = try! String(contentsOf: url!)
+        let parser = try! XcodeConfigurationParser(configuration:project)
+        let dict = try! parser.parse()
+        let objects = dict["objects"]!.dict!
+        XCTAssertEqual(objects.keys.count,1949)
+    }
 }
