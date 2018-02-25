@@ -8,10 +8,9 @@ import Foundation
 
 enum Regex : String {
     
-    case comment = "^(\\s*\\/\\*([\":\\s\\w\\d-\\.+-]*\\*\\/\\s*))*"
-    case keyCommentEqualComment = "^([{(]?\\s*([\":\\w\\d]+)\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*=\\s*).*$"
-    case value = "^\\s*(([\":\\w\\d\\]\\[]+)\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*;\\s*)"
-    case listValue = "[{(]?\\s*((\"\\$\\([:\\w\\d\\/]+\\)[:\\w\\d\\/]*\")|(\"[:\\w\\d\\/]+\")|([:\\w\\d\\/]+))\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*[)},]?"
+    case keyCommentEqualComment = "^(;?\\s*([\":\\w\\d]+)\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*=\\s*)"
+    case value = "^(\\s*([<>\":.\\w\\d\\]\\[]+)\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*;\\s*)"
+    case listValue = "[{(]?\\s*((\"\\$\\([:.\\w\\d\\/<>]+\\)[:.\\w\\d\\/<>]*\")|(\"[:.\\w\\d\\/<>]+\")|([:.\\w\\d\\/<>]+))\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*[)},]?"
 }
 
 
@@ -32,10 +31,7 @@ extension Substring {
     }
 }
 extension String {
-    enum Comment {
-        case scan
-        case end
-    }
+    
     
     func skip(_ characterSet : CharacterSet,at index: String.Index) -> String.Index {
         var currentIndex = index
@@ -44,14 +40,62 @@ extension String {
         }
         return currentIndex
     }
-    
-    func comment() -> (comment:String?,range:Range<String.Index>)? {
-        var state : Comment = .scan
-        var currentIndex = skip(.whitespacesAndNewlines,at: self.startIndex)
-        if !self[currentIndex...].hasPrefix("/*") {
-            return currentIndex == self.startIndex ? nil : (nil,self.startIndex..<currentIndex)
+    //     case keyCommentEqualComment = "^(\\s*([\":\\w\\d]+)\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*=\\s*).*$"
+
+    func keyValueStart2() -> (key:String,comment: String?,range:Range<String.Index>)? {
+        enum State {
+            case scanKey
+            case scanComment
+            case end
         }
-        currentIndex =  self.index(currentIndex, offsetBy: 2, limitedBy: self.endIndex) ?? self.endIndex
+        var state : State = .scanKey
+        var currentIndex = skip(.whitespacesAndNewlines,at: self.startIndex)
+        
+        let keyRangeStart = currentIndex
+        var key : String?
+        var comment : String?
+        while currentIndex < self.endIndex {
+            if let character = self[currentIndex].unicodeScalars.first, CharacterSet.newlines.contains(character) {
+                return nil
+            }
+            switch state {
+            case .scanKey:
+                switch self[currentIndex] {
+                case "\"","A"..."Z","0"..."9",":":
+                    break
+                default:
+                    key = String(self[keyRangeStart..<currentIndex])
+                    currentIndex = skip(.whitespaces, at: currentIndex)
+                    state = .scanComment
+                }
+            case .scanComment:
+                if let (rangeComment,commentRange) = self.comment(at: currentIndex) {
+                    comment = rangeComment
+                    let distance = self.distance(from: commentRange.lowerBound, to: commentRange.upperBound)
+                    currentIndex = self.index(currentIndex, offsetBy: distance)
+                }
+                state = .end
+            case .end:
+                guard self[currentIndex] == "=", let key = key else {
+                    return nil
+                }
+                currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
+                currentIndex = skip(.whitespaces,at: currentIndex)
+                return (key,comment,self.startIndex..<currentIndex)
+        
+            }
+            currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
+        }
+        return nil
+    }
+    
+    func comment(at index : String.Index) -> (comment:String?,range:Range<String.Index>)? {
+        enum State {
+            case scan
+            case end
+        }
+        var currentIndex = index
+        var state : State = .scan
         let rangeStart = currentIndex
         while currentIndex < self.endIndex {
             if let character = self[currentIndex].unicodeScalars.first, CharacterSet.newlines.contains(character) {
@@ -80,6 +124,15 @@ extension String {
         return nil
     }
     
+    func commentWithWhiteSpaceAndNewLines() -> (comment:String?,range:Range<String.Index>)? {
+        var currentIndex = skip(.whitespacesAndNewlines,at: self.startIndex)
+        if !self[currentIndex...].hasPrefix("/*") {
+            return currentIndex == self.startIndex ? nil : (nil,self.startIndex..<currentIndex)
+        }
+        currentIndex =  self.index(currentIndex, offsetBy: 2, limitedBy: self.endIndex) ?? self.endIndex
+        return comment(at: currentIndex)
+    }
+    
     
     
     func value() -> (value:String,range:Range<String.Index>)?  {
@@ -90,7 +143,7 @@ extension String {
         guard let result = matches.first,result.numberOfRanges > 1 else {
             return nil
         }
-        guard let range = Range(result.range(at: 1),in:self),let matchedValueRange = Range(result.range(at: 2),in:self ) else {
+        guard let range = Range(result.range(at: 0),in:self),let matchedValueRange = Range(result.range(at: 2),in:self ) else {
             return nil
         }
         let value = String(self[matchedValueRange])
@@ -127,7 +180,7 @@ extension String {
         guard let result = matches.first,result.numberOfRanges > 1 else {
             return nil
         }
-        guard let range = Range(result.range(at: 1),in:self),let matchedKeyRange = Range(result.range(at: 2),in:self ) else {
+        guard let range = Range(result.range(at: 0),in:self),let matchedKeyRange = Range(result.range(at: 2),in:self ) else {
             return nil
         }
         let key = String(self[matchedKeyRange])
