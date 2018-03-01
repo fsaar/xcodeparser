@@ -49,12 +49,8 @@ private extension XcodeConfigurationParser {
                 let remainderAfterKey = String(string[currentIndex...range.upperBound])
                 if let (value,valueRange) = remainderAfterKey.value() {
                     currentIndex = string.index(index: currentIndex,after: valueRange)
-                    syncGroup.enter()
-                    queue.addOperation {
-                        let e = XcodeSimpleExpression(value: value, comment: comment)
-                        resultsDict[key] = .assignment(expression: e)
-                        syncGroup.leave()
-                    }
+                    let e = XcodeSimpleExpression(value: value, comment: comment)
+                    resultsDict[key] = .assignment(expression: e)
                 }
                 else if let expressionRange = rangeDict[currentIndex],let firstChar = remainderAfterKey.first  {
                     let innerRange = string.innerRange(of: expressionRange)
