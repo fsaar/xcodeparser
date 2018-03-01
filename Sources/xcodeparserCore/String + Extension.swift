@@ -8,7 +8,6 @@ import Foundation
 
 enum Regex : String {
     
-    case keyCommentEqualComment = "^(\\s*([\":\\w\\d]+)\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*=\\s*)"
     case value = "^(\\s*([<>\":.\\w\\d\\]\\[]+)\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*;\\s*)"
     case listValue = "[{(]?\\s*((\"\\$\\([:.\\w\\d\\/<>]+\\)[:.\\w\\d\\/<>]*\")|(\"[:.\\w\\d\\/<>]+\")|([:.\\w\\d\\/<>]+))\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*[)},]?"
 }
@@ -40,9 +39,8 @@ extension String {
         }
         return currentIndex
     }
-//    case keyCommentEqualComment = "^(\\s*([\":\\w\\d]+)\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*=\\s*)"
 
-    func keyValueStart2() -> (key:String,comment: String?,range:Range<String.Index>)? {
+    func keyValueStart() -> (key:String,comment: String?,range:Range<String.Index>)? {
         enum State {
             case scanKey
             case scanComment
@@ -50,7 +48,6 @@ extension String {
         }
         var state : State = .scanKey
         var currentIndex = skip(.whitespacesAndNewlines,at: self.startIndex)
-        
         let keyRangeStart = currentIndex
         var key : String?
         var comment : String?
@@ -61,7 +58,7 @@ extension String {
             switch state {
             case .scanKey:
                 switch self[currentIndex] {
-                case "\"","_","A"..."Z","a"..."z","0"..."9",":":
+                case "|", "~","\"","_","-","+","*","#","<",">",".","$","?","!","[","]","&","@","A"..."Z","a"..."z","0"..."9",":":
                     currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
                 default:
                     key = String(self[keyRangeStart..<currentIndex])
@@ -94,6 +91,9 @@ extension String {
         }
         var currentIndex = index
         var state : State = .scan
+        guard self[currentIndex...].hasPrefix("/*") else {
+            return nil
+        }
         let rangeStart = self.index(currentIndex, offsetBy: 2, limitedBy: self.endIndex) ?? self.endIndex
         while currentIndex < self.endIndex {
             if let character = self[currentIndex].unicodeScalars.first, CharacterSet.newlines.contains(character) {
@@ -124,9 +124,6 @@ extension String {
     
     func commentWithWhiteSpaceAndNewLines() -> (comment:String?,range:Range<String.Index>)? {
         let currentIndex = skip(.whitespacesAndNewlines,at: self.startIndex)
-        if !self[currentIndex...].hasPrefix("/*") {
-            return currentIndex == self.startIndex ? nil : (nil,self.startIndex..<currentIndex)
-        }
         return comment(at: currentIndex)
     }
     
@@ -166,26 +163,5 @@ extension String {
             comment = String(self[matchedCommentRange])
         }
         return (value,comment,fullRange)
-    }
-    
-    
-    func keyValueStart() -> (key:String,comment: String?,range:Range<String.Index>)? {
-        guard let dictRegex = try? NSRegularExpression(pattern: Regex.keyCommentEqualComment.rawValue, options: [.anchorsMatchLines]) else {
-            return nil
-        }
-        let matches = dictRegex.matches(in: self, options: [], range: NSMakeRange(0, count))
-        guard let result = matches.first,result.numberOfRanges > 1 else {
-            return nil
-        }
-        guard let range = Range(result.range(at: 0),in:self),let matchedKeyRange = Range(result.range(at: 2),in:self ) else {
-            return nil
-        }
-        let key = String(self[matchedKeyRange])
-        
-        var comment : String?
-        if result.numberOfRanges > 3,let matchedCommentRange = Range(result.range(at: 4),in:self ) {
-            comment = String(self[matchedCommentRange])
-        }
-        return (key,comment,range)
     }
 }
