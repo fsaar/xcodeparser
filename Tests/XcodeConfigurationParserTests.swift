@@ -135,7 +135,7 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertEqual(value,"value1")
         XCTAssertEqual(value2,"value2")
         XCTAssertEqual(value3,"value3")
-        XCTAssertEqual(expression,XcodeSimpleExpression(value:"value4",comment:"comment_ 4 "))
+        XCTAssertEqual(expression,XcodeSimpleExpression(value:"value4",comment:" comment_ 4 "))
     }
 
     func testThatItShouldReadAListConfiguration() {
@@ -154,10 +154,28 @@ class XcodeConfigurationParserTests : XCTestCase {
         let comment = (config["OBJ_11"]!.value as! XcodeListExpression).comment
         let valueList = config["OBJ_11"]!.stringList!
         XCTAssertEqual(value,"value1")
-        XCTAssertEqual(comment,"List ")
+        XCTAssertEqual(comment," List ")
         XCTAssertEqual(valueList,["value2","value3"])
     }
 
+    func testThatItShouldParseValueWithCommentCorrectly() {
+        let configString =  """
+                                {
+                                    buildConfigurationList = OBJ_50 /* Build configuration list for PBXAggregateTarget "xcodeparserPackageTests" */;
+                                    name = xcodeparserPackageTests;
+                                    productName = xcodeparserPackageTests;
+                                };
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse()
+        let value1 = config["buildConfigurationList"]!.string!
+        let value2 = config["name"]!.string!
+        let value3 = config["productName"]!.string!
+        XCTAssertEqual(value1,"OBJ_50")
+        XCTAssertEqual(value2,"xcodeparserPackageTests")
+        XCTAssertEqual(value3,"xcodeparserPackageTests")
+    }
+    
     func testThatItShouldReadAListConfigurationWithDifferentListCharacterSequences() {
         let configString =  """
                                 {
@@ -215,7 +233,7 @@ class XcodeConfigurationParserTests : XCTestCase {
         let value2 = dict["buildActionMask"]!.string
         let value3 = dict["runOnlyForDeploymentPostprocessing"]!.string
         XCTAssertEqual(value1,"PBXFrameworksBuildPhase")
-        XCTAssertEqual(comment1,"Frameworks ")
+        XCTAssertEqual(comment1," Frameworks ")
         XCTAssertEqual(value2,"0")
         XCTAssertEqual(value3,"1")
     }
@@ -244,7 +262,7 @@ class XcodeConfigurationParserTests : XCTestCase {
         let buildSettings = obj_44["buildSettings"]!.value as! XcodeDictionaryExpression
         let testability = buildSettings.value["ENABLE_TESTABILITY"]!.string!
         let searchPaths = buildSettings.value["FRAMEWORK_SEARCH_PATHS"]!.stringList
-        XCTAssertEqual(comment1,"Debug ")
+        XCTAssertEqual(comment1," Debug ")
         XCTAssertEqual(testability,"YES")
         XCTAssertEqual(searchPaths, ["\"$(inherited)\"",
                                "\"$(PLATFORM_DIR)/Developer/Library/Frameworks\""])
