@@ -175,12 +175,12 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertEqual(value2,"xcodeparserPackageTests")
         XCTAssertEqual(value3,"xcodeparserPackageTests")
     }
-    
+
     func testThatItShouldReadAListConfigurationWithDifferentListCharacterSequences() {
         let configString =  """
                                 {
                                     OBJ_10 = (
-                                      "$(inherited)",
+                                        "$(inherited)",
                                         "inherited2",
                                         inherited3
                                     );
@@ -209,9 +209,9 @@ class XcodeConfigurationParserTests : XCTestCase {
          let expression = config["children"]!.value as! XcodeListExpression
         let valueList = expression.value
         XCTAssertEqual(value,"value1")
-        XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserTests::Product\"",comment:"xcodeparserTests.xctest "),
-                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparser::Product\"",comment:"xcodeparser "),
-                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserCore::Product\"",comment:"xcodeparserCore.framework ")])
+        XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserTests::Product\"",comment:" xcodeparserTests.xctest "),
+                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparser::Product\"",comment:" xcodeparser "),
+                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserCore::Product\"",comment:" xcodeparserCore.framework ")])
     }
 
     func testThatItShouldReadADictionaryConfiguration() {
