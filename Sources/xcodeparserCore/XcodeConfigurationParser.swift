@@ -11,7 +11,13 @@ public class XcodeConfigurationParser {
     public enum Result : Error {
         case invalid
     }
-    
+
+    let queue = { ()-> OperationQueue in
+        let q =  OperationQueue()
+        q.qualityOfService = .userInitiated
+        return q
+    }()
+
     let configuration : String
     let rangeDict : [String.Index:ClosedRange<String.Index>]
     public init(configuration : String) throws {
@@ -33,7 +39,6 @@ public class XcodeConfigurationParser {
 
 private extension XcodeConfigurationParser {
     func dictionary(from string : Substring,with range : ClosedRange<String.Index>) throws  -> [String : XcodeExpression] {
-        let queue = OperationQueue()
         let syncGroup = DispatchGroup()
         var resultsDict : [String : XcodeExpression] = [:]
         var currentIndex = range.lowerBound

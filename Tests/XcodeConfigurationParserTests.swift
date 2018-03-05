@@ -209,9 +209,9 @@ class XcodeConfigurationParserTests : XCTestCase {
          let expression = config["children"]!.value as! XcodeListExpression
         let valueList = expression.value
         XCTAssertEqual(value,"value1")
-        XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserTests::Product\"",comment:" xcodeparserTests.xctest "),
-                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparser::Product\"",comment:" xcodeparser "),
-                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserCore::Product\"",comment:" xcodeparserCore.framework ")])
+        XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserTests::Product\"",comment:"xcodeparserTests.xctest "),
+                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparser::Product\"",comment:"xcodeparser "),
+                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserCore::Product\"",comment:"xcodeparserCore.framework ")])
     }
 
     func testThatItShouldReadADictionaryConfiguration() {
@@ -502,14 +502,5 @@ class XcodeConfigurationParserTests : XCTestCase {
         XCTAssertNotNil(objects["565A1FC41DD8F331003CE960"])
         XCTAssertNotNil(objects["56D70D2F1DD9A7A6004CA293"])
         XCTAssertNotNil(objects["E391093442B4E54575D4146B"])
-    }
-    
-    func testThatItShouldReadTFLProjectFileCorrectly2() {
-        let url = Bundle(for: type(of:self)) .url(forResource: "aimia", withExtension: "sample")
-        let project = try! String(contentsOf: url!)
-        let parser = try! XcodeConfigurationParser(configuration:project)
-        let dict = try! parser.parse()
-        let objects = dict["objects"]!.dict!
-        XCTAssertEqual(objects.keys.count,1949)
     }
 }
