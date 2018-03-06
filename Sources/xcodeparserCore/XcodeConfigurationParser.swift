@@ -43,24 +43,23 @@ private extension XcodeConfigurationParser {
         var resultsDict : [String : XcodeExpression] = [:]
         var currentIndex = range.lowerBound
         while currentIndex <= range.upperBound {
-            let remainder = string[currentIndex...range.upperBound]
-            if let (_,commentRange) = String(remainder).commentWithWhiteSpaceAndNewLines() {
-                currentIndex = string.index(index: currentIndex,after: commentRange)
+            if let (_,commentRange) = string.commentWithWhiteSpaceAndNewLines(at:currentIndex...range.upperBound) {
+                currentIndex = commentRange.upperBound
                 continue
             }
             
-            if let (key,comment,keyRange) = String(string[currentIndex...range.upperBound]).keyValueStart() {
-                currentIndex = string.index(index: currentIndex,after: keyRange)
-                let remainderAfterKey = String(string[currentIndex...range.upperBound])
-                if let (value,valueRange) = remainderAfterKey.value() {
-                    currentIndex = string.index(index: currentIndex,after: valueRange)
+            if let (key,comment,keyRange) = string.keyValueStart(at:currentIndex...range.upperBound) {
+                currentIndex = keyRange.upperBound
+                let remainderAfterKey = string[currentIndex...range.upperBound]
+                if let (value,valueRange) = string.value(at:currentIndex...range.upperBound) {
+                    currentIndex = valueRange.upperBound
                     let e = XcodeSimpleExpression(value: value, comment: comment)
                     resultsDict[key] = .assignment(expression: e)
                 }
                 else if let expressionRange = rangeDict[currentIndex],let firstChar = remainderAfterKey.first  {
                     let innerRange = string.innerRange(of: expressionRange)
                     let expression = string[innerRange]
-                    currentIndex = string.index(after:expressionRange.upperBound)
+                    currentIndex = expressionRange.upperBound
                     if string[currentIndex] == ";" {
                         currentIndex = string.index(after: currentIndex)
                     }
@@ -96,7 +95,7 @@ private extension XcodeConfigurationParser {
         while index<=range.upperBound,let tuple = String(string[index...range.upperBound]).listValue() {
             let expression = XcodeSimpleExpression(value: tuple.value, comment: tuple.comment)
             list += [expression]
-            index = string.index(index: index,after: tuple.range)
+            index = string.index(index: index,after:tuple.range )
         }
         return list
     }

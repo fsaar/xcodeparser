@@ -26,32 +26,29 @@ extension Substring {
         let upperBound = self.index(before: range.upperBound)
         return lowerBound...upperBound
     }
-}
-extension String {
     
-    
-    func skip(_ characterSet : CharacterSet,at index: String.Index) -> String.Index {
-        var currentIndex = index
-        while currentIndex < self.endIndex, let character = self[currentIndex].unicodeScalars.first,characterSet.contains(character) {
-            currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
+    func skip(_ characterSet : CharacterSet,with range: ClosedRange<String.Index>) -> String.Index {
+        var currentIndex = range.lowerBound
+        while currentIndex < range.upperBound, let character = self[currentIndex].unicodeScalars.first,characterSet.contains(character) {
+            currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
         }
         return currentIndex
     }
-
-    func value() -> (value:String,range:Range<String.Index>)?  {
+    
+    func value(at range: ClosedRange<String.Index>) -> (value:String,range:Range<String.Index>)?  {
         enum State {
             case scanValue
             case scanComment
             case end
         }
         var state : State = .scanValue
-        var currentIndex = skip(.whitespaces,at: self.startIndex)
+        var currentIndex = skip(.whitespaces,with: range)
         if self[currentIndex] == "{" || self[currentIndex] == "(" {
             return nil
         }
         let valueRangeStart = currentIndex
         var value : String?
-        while currentIndex < self.endIndex {
+        while currentIndex < range.upperBound {
             if let character = self[currentIndex].unicodeScalars.first, CharacterSet.newlines.contains(character) {
                 return nil
             }
@@ -59,25 +56,25 @@ extension String {
             case .scanValue:
                 switch self[currentIndex] {
                 case "|", "~","\"","_","-","+","*","#","<",">",".","$","?","!","[","]","&","@","A"..."Z","a"..."z","0"..."9",":":
-                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
+                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
                 default:
                     value = String(self[valueRangeStart..<currentIndex])
-                    currentIndex = skip(.whitespaces, at: currentIndex)
+                    currentIndex = skip(.whitespaces, with: currentIndex...range.upperBound)
                     state = .scanComment
                 }
             case .scanComment:
-                if let (_,commentRange) = self.comment(at: currentIndex) {
+                if let (_,commentRange) = self.comment(at: currentIndex...range.upperBound) {
                     let distance = self.distance(from: commentRange.lowerBound, to: commentRange.upperBound)
                     currentIndex = self.index(currentIndex, offsetBy: distance)
                 }
                 state = .end
             case .end:
                 if self[currentIndex] == ";" {
-                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
+                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
                 }
-                currentIndex = skip(.whitespaces,at: currentIndex)
+                currentIndex = skip(.whitespaces,with: currentIndex...range.upperBound)
                 if let value = value {
-                    return (value,self.startIndex..<currentIndex)
+                    return (value,range.lowerBound..<currentIndex)
                 }
                 else {
                     return nil
@@ -87,18 +84,18 @@ extension String {
         return nil
     }
     
-    func keyValueStart() -> (key:String,comment: String?,range:Range<String.Index>)? {
+    func keyValueStart(at range: ClosedRange<String.Index>) -> (key:String,comment: String?,range:Range<String.Index>)? {
         enum State {
             case scanKey
             case scanComment
             case end
         }
         var state : State = .scanKey
-        var currentIndex = skip(.whitespacesAndNewlines,at: self.startIndex)
+        var currentIndex = skip(.whitespacesAndNewlines,with: range)
         let keyRangeStart = currentIndex
         var key : String?
         var comment : String?
-        while currentIndex < self.endIndex {
+        while currentIndex < range.upperBound {
             if let character = self[currentIndex].unicodeScalars.first, CharacterSet.newlines.contains(character) {
                 return nil
             }
@@ -106,14 +103,14 @@ extension String {
             case .scanKey:
                 switch self[currentIndex] {
                 case "|", "~","\"","_","-","+","*","#","<",">",".","$","?","!","[","]","&","@","A"..."Z","a"..."z","0"..."9",":":
-                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
+                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
                 default:
                     key = String(self[keyRangeStart..<currentIndex])
-                    currentIndex = skip(.whitespaces, at: currentIndex)
+                    currentIndex = skip(.whitespaces, with: currentIndex...range.upperBound)
                     state = .scanComment
                 }
             case .scanComment:
-                if let (rangeComment,commentRange) = self.comment(at: currentIndex) {
+                if let (rangeComment,commentRange) = self.comment(at: currentIndex...range.upperBound) {
                     comment = rangeComment
                     let distance = self.distance(from: commentRange.lowerBound, to: commentRange.upperBound)
                     currentIndex = self.index(currentIndex, offsetBy: distance)
@@ -123,26 +120,26 @@ extension String {
                 guard self[currentIndex] == "=", let key = key else {
                     return nil
                 }
-                currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
-                currentIndex = skip(.whitespaces,at: currentIndex)
-                return (key,comment,self.startIndex..<currentIndex)
+                currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
+                currentIndex = skip(.whitespaces,with: currentIndex...range.upperBound)
+                return (key,comment,range.lowerBound..<currentIndex)
             }
         }
         return nil
     }
     
-    func comment(at index : String.Index) -> (comment:String?,range:Range<String.Index>)? {
+    func comment(at range : ClosedRange<String.Index>) -> (comment:String?,range:Range<String.Index>)? {
         enum State {
             case scan
             case end
         }
-        var currentIndex = index
+        var currentIndex = range.lowerBound
         var state : State = .scan
         guard self[currentIndex...].hasPrefix("/*") else {
             return nil
         }
-        let rangeStart = self.index(currentIndex, offsetBy: 2, limitedBy: self.endIndex) ?? self.endIndex
-        while currentIndex < self.endIndex {
+        let rangeStart = self.index(currentIndex, offsetBy: 2, limitedBy: range.upperBound) ?? range.upperBound
+        while currentIndex < range.upperBound {
             if let character = self[currentIndex].unicodeScalars.first, CharacterSet.newlines.contains(character) {
                 return nil
             }
@@ -155,26 +152,30 @@ extension String {
                 if case "/" = self[currentIndex] {
                     let rangeEnd = self.index(currentIndex, offsetBy: -1)
                     let comment = String(self[rangeStart..<rangeEnd])
-                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
-                    currentIndex = skip(.whitespacesAndNewlines,at: currentIndex)
-                    return (comment,index..<currentIndex)
+                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
+                    currentIndex = skip(.whitespacesAndNewlines,with: currentIndex...range.upperBound)
+                    return (comment,range.lowerBound..<currentIndex)
                 }
                 else
                 {
                     state = .scan
                 }
             }
-            currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: self.endIndex) ?? self.endIndex
+            currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
         }
         return nil
     }
     
-    func commentWithWhiteSpaceAndNewLines() -> (comment:String?,range:Range<String.Index>)? {
-        let currentIndex = skip(.whitespacesAndNewlines,at: self.startIndex)
-        return comment(at: currentIndex)
+    func commentWithWhiteSpaceAndNewLines(at range: ClosedRange<String.Index>) -> (comment:String?,range:Range<String.Index>)? {
+        let currentIndex = skip(.whitespacesAndNewlines,with: range)
+        guard let tuple = comment(at: currentIndex...range.upperBound) else {
+            return currentIndex != range.lowerBound ? (nil,range.lowerBound..<currentIndex) : nil
+        }
+        return tuple
     }
-    
+}
 
+extension String {
     func listValue() -> (value:String,comment: String?,range:Range<String.Index>)?  {
         guard let dictRegex = try? NSRegularExpression(pattern: Regex.listValue.rawValue, options: [.anchorsMatchLines]) else {
             return nil
