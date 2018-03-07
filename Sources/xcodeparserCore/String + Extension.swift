@@ -6,11 +6,6 @@
 
 import Foundation
 
-enum Regex : String {
-    case listValue = "[{(]?\\s*((\"\\$\\([:.\\w\\d\\/<>]+\\)[:.\\w\\d\\/<>]*\")|(\"[:.\\w\\d\\/<>]+\")|([:.\\w\\d\\/<>]+))\\s*(\\/\\*\\s*([\":\\s\\w\\d-\\.+-\\]\\[]*)\\*\\/)?\\s*[)},]?" // [{(]? + \s + "$variableValue" OR "Value" OR Value + \s + comment + \s + [)},]?
-}
-
-
 extension Substring {
     func index(index : String.Index, after range: Range<String.Index>) -> String.Index {
         let distance = self.distance(from: range.lowerBound, to: range.upperBound)
@@ -173,27 +168,65 @@ extension Substring {
         }
         return tuple
     }
-}
-
-extension String {
-    func listValue() -> (value:String,comment: String?,range:Range<String.Index>)?  {
-        guard let dictRegex = try? NSRegularExpression(pattern: Regex.listValue.rawValue, options: [.anchorsMatchLines]) else {
-            return nil
+    
+    func listValue(at range: ClosedRange<String.Index>) -> (value:String,comment: String?,range:Range<String.Index>)?  {
+        enum State {
+            case scanQuote
+            case scanQuoteEnd
+            case scanValue
+            case scanComment
+            case end
         }
-        let matches = dictRegex.matches(in: self, options: [], range: NSMakeRange(0, count))
-        guard let result = matches.first, result.numberOfRanges > 0 else {
-            return nil
-        }
-        
-        guard let fullRange = Range(result.range(at: 0),in:self),
-            let matchedValueRange = Range(result.range(at: 2),in:self) ?? Range(result.range(at: 3),in:self) ?? Range(result.range(at: 4),in:self) else {
-                return nil
-        }
-        let value = String(self[matchedValueRange])
+        var state : State = .scanQuote
+        var currentIndex = skip(.whitespacesAndNewlines,with: range)
+        let valueRangeStart = currentIndex
+        var value : String?
         var comment : String?
-        if result.numberOfRanges > 5,let matchedCommentRange = Range(result.range(at: 6),in:self ) {
-            comment = String(self[matchedCommentRange])
+        while currentIndex < range.upperBound {
+            switch state {
+            case .scanQuote:
+                if self[currentIndex] != "\"" {
+                    state = .scanValue
+                }
+                else {
+                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
+                    state = .scanQuoteEnd
+                }
+            case .scanQuoteEnd:
+                let nextIndex = self.index(after: currentIndex)
+                if (self[currentIndex] == "\"" && (self[nextIndex] == "," || self[nextIndex] == " ")) {
+                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
+                    value = String(self[valueRangeStart..<currentIndex])
+                    state = .scanComment
+                }
+                else {
+                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
+                }
+            case .scanValue:
+                switch self[currentIndex] {
+                case "\\","/","(",")","{","}","|","~","_","-","+","*","#","<",">",".","$","?","!","[","]","&","@","A"..."Z","a"..."z","0"..."9",":":
+                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
+                default:
+                    value = String(self[valueRangeStart..<currentIndex])
+                    state = .scanComment
+                }
+            case .scanComment:
+                currentIndex = skip(.whitespaces, with: currentIndex...range.upperBound)
+                if let (rangeComment,commentRange) = self.comment(at: currentIndex...range.upperBound) {
+                    comment = rangeComment
+                    let distance = self.distance(from: commentRange.lowerBound, to: commentRange.upperBound)
+                    currentIndex = self.index(currentIndex, offsetBy: distance)
+                }
+                state = .end
+            case .end:
+                currentIndex = skip(.whitespaces, with: currentIndex...range.upperBound)
+                if self[currentIndex] == ")" || self[currentIndex] == "," {
+                    currentIndex =  self.index(currentIndex, offsetBy: 1, limitedBy: range.upperBound) ?? range.upperBound
+                }
+                return (value ?? "",comment,range.lowerBound..<currentIndex)
+            }
         }
-        return (value,comment,fullRange)
+        return nil
     }
 }
+
