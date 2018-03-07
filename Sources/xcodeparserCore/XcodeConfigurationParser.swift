@@ -91,10 +91,10 @@ private extension XcodeConfigurationParser {
     func extractList(from string: Substring,with range : ClosedRange<String.Index>) -> [XcodeSimpleExpression] {
         var list : [XcodeSimpleExpression] = []
         var index = range.lowerBound
-        while index<=range.upperBound,let tuple = String(string[index...range.upperBound]).listValue() {
+        while index<=range.upperBound,let tuple = string.listValue(at:index...range.upperBound) {
             let expression = XcodeSimpleExpression(value: tuple.value, comment: tuple.comment)
             list += [expression]
-            index = string.index(index: index,after:tuple.range )
+            index = tuple.range.upperBound
         }
         return list
     }
