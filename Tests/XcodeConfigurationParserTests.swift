@@ -209,9 +209,30 @@ class XcodeConfigurationParserTests : XCTestCase {
          let expression = config["children"]!.value as! XcodeListExpression
         let valueList = expression.value
         XCTAssertEqual(value,"value1")
-        XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserTests::Product\"",comment:"xcodeparserTests.xctest "),
-                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparser::Product\"",comment:"xcodeparser "),
-                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserCore::Product\"",comment:"xcodeparserCore.framework ")])
+        XCTAssertEqual(valueList,[XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserTests::Product\"",comment:" xcodeparserTests.xctest "),
+                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparser::Product\"",comment:" xcodeparser "),
+                                    XcodeSimpleExpression(value:"\"xcodeparser::xcodeparserCore::Product\"",comment:" xcodeparserCore.framework ")])
+    }
+    
+    func testThatItShouldReadAListConfigurationWithQuotes() {
+        let configString =  """
+                                {
+                                   HEADER_SEARCH_PATHS = (
+                                                "$(inherited)",
+                                                /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+                                                "\"${PODS_ROOT}/Headers/Public\"",
+                                                "\"${PODS_ROOT}/OCMock\"/**",
+                                                "\"${PODS_ROOT}/OHHTTPStubs\"/**",
+                                                "\"${PODS_ROOT}/Headers/Public/UrbanAirship-iOS-SDK/\"/**",
+                                                "\"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources\"",
+                                                "\"${PODS_ROOT}/Headers/Public/TTTAttributedLabel\"",
+                                                );
+                                }
+                            """
+        let parser = try! XcodeConfigurationParser(configuration:configString)
+        let config = try! parser.parse()
+        let expression = config["HEADER_SEARCH_PATHS"]!.value as! XcodeListExpression
+        XCTAssertEqual(expression.value.count,8)
     }
 
     func testThatItShouldReadADictionaryConfiguration() {
@@ -317,8 +338,9 @@ class XcodeConfigurationParserTests : XCTestCase {
     }
 
     func testThatItShouldReadTFLProjectFileCorrectly() {
-        let url = Bundle(for: type(of:self)) .url(forResource: "tflproject", withExtension: "sample")
-        let project = try! String(contentsOf: url!)
+        let url = Bundle(for: type(of:self)) .url(forResource: "tflproject", withExtension: "sample")!
+        let data = try! Data(contentsOf: url, options: .alwaysMapped)
+        let project = String(data: data, encoding: .utf8)!
         let parser = try! XcodeConfigurationParser(configuration:project)
         let dict = try! parser.parse()
         let objects = dict["objects"]!.dict!
