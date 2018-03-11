@@ -1,6 +1,5 @@
 # Xcode
 #
-xcshareddata
 .build/
 build/
 *.pbxuser
