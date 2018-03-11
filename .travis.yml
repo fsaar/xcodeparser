@@ -1,0 +1,11 @@
+language: objective-c
+
+osx_image: xcode9.3beta 
+script:
+- xcodebuild build -scheme "xcodeparserCore" test 
+- travis_retry xcodebuild build -scheme "xcodeparserCore" test
+- bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  slack: 'samedialabs:$SLACK_SAMEDIALABS_TRAVIS_CI'
+
