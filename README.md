@@ -17,6 +17,7 @@ This is just the first stage of this project. The next stage includes the follow
 
 built on top of the current library
 
+An overview of the current implementation can be found [here](https://www.allaboutswift.com/dev/2018/3/14/an-exercise-in-swift-an-xcode-parser)
 
 
 
